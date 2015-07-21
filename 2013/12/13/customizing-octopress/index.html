@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Customizing Octopress | BI Skill Points</title>
+  <meta name="author" content="Stu Baker">
+  
+  <meta name="description" content="I recently made a few customizations to my Octopress environment using resources/blog articles scattered about the web; all were surprisingly easy and">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Customizing Octopress"/>
+  <meta property="og:site_name" content="BI Skill Points"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="BI Skill Points" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">BI Skill Points</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-12-13T09:40:21.000Z"><a href="/2013/12/13/customizing-octopress/">2013-12-13</a></time>
+      
+      
+  
+    <h1 class="title">Customizing Octopress</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>I recently made a few customizations to my Octopress environment using resources/blog articles scattered about the web; all were surprisingly easy and definitely added value.  Here are my favorites if you want to take a stab at any of these yourself:</p>
+<h2 id="hiding-specific-categories-of-posts-from-the-front-page"><a href="http://arshad.github.io/blog/2012/05/10/recipe-hiding-posts-from-the-octopress-front-page/" target="_blank" rel="external">Hiding specific categories of posts from the front page</a></h2>
+<p>I particularly wanted to do this for my Snippets category, as sometimes I want to take notes or describe the logic of a concept (or simply have a basic example that I can copy in the future), but I don’t particularly want that showing up as the top article on my front page either.  Best of both worlds by following the simple changes in this article.</p>
+<h2 id="change-the-preview-server-to-ruby-thin-server"><a href="http://blog.geoffpetrie.com/blog/2012/10/14/octopress-change-the-default-preview-server/" target="_blank" rel="external">Change the preview server to Ruby Thin Server</a></h2>
+<p>I did this trying to solve a different problem; it didn’t help then but I liked the server so much that I’ve stuck with it. Very easy to get it up and running too.</p>
+<h2 id="footnote-styling"><a href="http://hiltmon.com/blog/2013/05/08/octopress-now-has-footnotes/" target="_blank" rel="external">Footnote styling</a></h2>
+<p>I really liked the idea of using footnotes for my sources, but by default they are rather gigantic and widely spaced.  Some simple additions to <code>sass/custom/_styles.css</code> and your footnotes look like they are supposed to: compact and well-spaced.  I’ll even add an example footnote<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> for you to see what these changes look like.</p>
+<h2 id="filter-repositories-from-github-sidebar"><a href="http://blog.codebykat.com/2013/05/20/three-octopress-tweaks/#github-aside" target="_blank" rel="external">Filter repositories from Github sidebar</a></h2>
+<p>As the author of that linked post so aptly points out, it doesn’t make a lot of sense to show off the repository your blog is on if you are being hosted by Github Pages.  Also, some projects you just don’t want to show off, and a few lines of code will make sure they don’t appear under the Github Repos of your blog.</p>
+<h2 id="use-monokai-color-scheme-for-code-block-syntax-highlighting"><a href="https://github.com/ragle/Monokai-Sublime-Text-Octopress" target="_blank" rel="external">Use Monokai color scheme for code block syntax highlighting</a></h2>
+<p>Seems like lots of people want to slightly alter the built in syntax highlighting.  I like the Monokai theme from Sublime Text 2, and luckily I found a <a href="https://github.com/ragle/Monokai-Sublime-Text-Octopress" target="_blank" rel="external">nice patch</a> that will switch to that color scheme without much additional work.  You can also find great, detailed posts if you are more interested in the <a href="http://blog.alestanis.com/2013/02/04/octopress-and-the-twilight-color-scheme/" target="_blank" rel="external">Twilight color scheme</a> or a more <a href="http://blog.codebykat.com/2013/05/23/gorgeous-octopress-codeblocks-with-coderay/" target="_blank" rel="external">Github-style color scheme</a>.  Keep in mind though that some of these will require you to change your markdown processor and swap in a different syntax highlighter.  I preferred to stick with the default Pygments syntax highlighting and rdiscount markdown processor, and I was lucky to find a great resource already created.  Check out the prettiness:</p>
+
+<h2 id="add-tweets-to-the-sidebar-without-the-ugly-widget"><a href="http://blog.jonathanrwallace.com/blog/2013/09/21/octopress-love-twitter-update/" target="_blank" rel="external">Add tweets to the sidebar without the ugly widget</a></h2>
+<p>I don’t tweet a lot, but when I do, I want them to look like they belong on the page.  After Twitter changed its API to require authentication, it effectively got dropped from Octopress.  But a <a href="https://github.com/imathis/octopress/pull/1311" target="_blank" rel="external">nice Github contributor</a> figured out a way to continue displaying tweets.  Essentially, you create a Twitter widget and pull out the data-widget-id from the generated code and plop that into the _config.yaml file.  Looks great on the sidebar too!</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>I really like these footnotes.  You can even put <code>code blocks</code> in them and everything.  Great place to put <a href="http://imgur.com/r/cats/YYYC3bW" target="_blank" rel="external">ancillary links</a> that people may or may not care to look at/read. <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Web-Development/">Web Development</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/octopress/">octopress</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:stuaroo.github.io/biskillpoints-blog">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">Reporting Services: toggling issues with multiple rows</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/31/migrating-from-octopress-to-hexo/">Migrating from Octopress to Hexo</a>
+      </li>
+    
+      <li>
+        <a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">Analysis Services: service refuses to start with XML parsing error</a>
+      </li>
+    
+      <li>
+        <a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/">Quick thoughts after taking Microsoft Exam 70-461</a>
+      </li>
+    
+      <li>
+        <a href="/2014/03/28/t-sql-tips-transition-school-to-industry/">T-SQL Tips for Transitioning from School to Industry</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Analytics/">Analytics</a><small>1</small></li>
+  
+    <li><a href="/categories/Reporting/">Reporting</a><small>1</small></li>
+  
+    <li><a href="/categories/SQL/">SQL</a><small>3</small></li>
+  
+    <li><a href="/categories/Web-Development/">Web Development</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/asp-net/">asp.net</a><small>2</small></li>
+  
+    <li><a href="/tags/c/">c#</a><small>3</small></li>
+  
+    <li><a href="/tags/certification-exams/">certification exams</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/microsoft/">microsoft</a><small>1</small></li>
+  
+    <li><a href="/tags/octopress/">octopress</a><small>4</small></li>
+  
+    <li><a href="/tags/sargable/">sargable</a><small>1</small></li>
+  
+    <li><a href="/tags/snippets/">snippets</a><small>3</small></li>
+  
+    <li><a href="/tags/ssas/">ssas</a><small>1</small></li>
+  
+    <li><a href="/tags/ssrs/">ssrs</a><small>1</small></li>
+  
+    <li><a href="/tags/static-site-generators/">static site generators</a><small>1</small></li>
+  
+    <li><a href="/tags/t-sql/">t-sql</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget twitter">
+  <h3 class="title">Latest Tweets</h3>
+  <ul id="tweets">
+  	<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/stueth"  data-widget-id=411983651094536192  data-link-color="#1863a1" data-tweet-limit="3" data-chrome="noheader nofooter transparent noscrollbar">Tweets by @stueth</a>
+  </ul>
+  
+    <a href="http://twitter.com/stueth" class="twitter-follow-button" data-show-count="false">Follow @stueth</a>
+  
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Stu Baker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'plusonetobi';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.type = 'text/javascript';
+  twitterWidgets.async = true;
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+<script type="text/javascript">
+(function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}})(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>

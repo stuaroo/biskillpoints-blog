@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Migrating from Octopress to Hexo | BI Skill Points</title>
+  <meta name="author" content="Stu Baker">
+  
+  <meta name="description" content="One of the original reasons  I started using Octopress for blogging is I thought it would increase my motivation to learn Ruby.  However, after spending some time mucking about with various Octopress hacks, I decided Ruby just might not be for me.
+So I did some searching around to see what other static site generators might interest me, and low and behold I stumbled onto Hexo.  Hexo is written in JavaScript, and runs on the Node.js and is growing in popularity.  I’ve tinkered with Node.js some in the past, and since JavaScript is a language I’m more comfortable with I decided to take the plunge.  Here are some things I found that may help should you decide to migrate this way too.
+Content Migration
+Incredibly easy, I loved it.  Simply move your markdown files from Octopress source/_posts to your Hexo source/_posts.  Done, posts are ready to go.  One other setting you may want to modify is the default name format for new posts.  Simply open up the _config.yml file in Hexo’s main directory and change new_post_name to:
+1new_post_name: :year-:month-:day-:title.md
+This will give your new files the same file name format as the Octopress default.">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Migrating from Octopress to Hexo"/>
+  <meta property="og:site_name" content="BI Skill Points"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="BI Skill Points" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">BI Skill Points</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-01T01:00:28.000Z"><a href="/2015/05/31/migrating-from-octopress-to-hexo/">2015-05-31</a></time>
+      
+      
+  
+    <h1 class="title">Migrating from Octopress to Hexo</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>One of the original reasons  I started using Octopress for blogging is I thought it would increase my motivation to learn Ruby.  However, after spending some time mucking about with <a href="./2013/12/13/customizing-octopress/">various Octopress hacks</a>, I decided Ruby just might not be for me.</p>
+<p>So I did some searching around to see what other <a href="https://www.staticgen.com/" target="_blank" rel="external">static site generators</a> might interest me, and low and behold I stumbled onto <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>.  Hexo is written in JavaScript, and runs on the Node.js and is growing in popularity.  I’ve tinkered with Node.js some in the past, and since JavaScript is a language I’m more comfortable with I decided to take the plunge.  Here are some things I found that may help should you decide to migrate this way too.</p>
+<h2 id="content-migration">Content Migration</h2>
+<p>Incredibly easy, I loved it.  Simply move your markdown files from Octopress <code>source/_posts</code> to your Hexo <code>source/_posts</code>.  Done, posts are ready to go.  One other setting you may want to modify is the default name format for new posts.  Simply open up the <code>_config.yml</code> file in Hexo’s main directory and change <code>new_post_name</code> to:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new_post_name: :year-:month-:day-:title.md</span><br></pre></td></tr></table></figure>
+<p>This will give your new files the same file name format as the Octopress default.</p>
+<a id="more"></a>
+<h2 id="basic-commands">Basic Commands</h2>
+<p>All commands are very similar to Octopress except you’ll use the keyword <code>hexo</code> instead of <code>rake</code>.  Some examples:</p>
+<ul>
+<li>New post: <code>hexo new &quot;post title&quot;</code></li>
+<li>New page: <code>hexo new page &quot;page name&quot;</code></li>
+<li>Start server: <code>hexo server</code></li>
+<li>Generate files in the public folder: <code>hexo generate</code></li>
+<li>Deploy files to Github: <code>hexo deploy</code></li>
+</ul>
+<p>One big plus for Hexo is when previewing posts using <code>hexo server</code>, you don’t need to go through the process of generating files first.  Made a change to one of the <code>_config.yml</code> files, or trying out a new widget?  Simply start up the server and see what it looks like!</p>
+<h2 id="optional-add-ins">Optional Add-Ins</h2>
+<p>If, like me, you are a big fan of the little things like footnotes, strikethroughs and simple tables, you can install a separate markdown renderer to keep working with all that goodness.  My markdown renderer of choice is <a href="https://github.com/celsomiranda/hexo-renderer-markdown-it" target="_blank" rel="external">Markdown-it</a>, which allows all the things I mentioned (and also supports Github Flavored Markdown, which I know many are a fan of).</p>
+<h2 id="roll-your-own-widgets">Roll Your Own Widgets</h2>
+<p>One thing that’s nice about messing with asides in Octopress is it aides in transitioning to editing widgets in Hexo.  Some themes, like the modified Light theme I’m currently using, come with pre-made sidebar widgets ready to go.  I was not familiar with the .ejs templating in Hexo, but after looking through a few you can easily get a feel for their flow.</p>
+<p>I’ve been messing around with a Twitter widget that runs off a timeline, similar to the hack-y functionality on my Octopress site.  Using <a href="https://github.com/imathis/octopress/pull/1311/files" target="_blank" rel="external">this proposed pull request to Octopress to fix Twitter plugins</a> I made some edits to .ejs files to construct it.  If you’d like to try this yourself:</p>
+<ul>
+<li>Enable twitter under widgets, and set variables for your twitter account/timeline in your themes <code>_config.yml</code>:</li>
+</ul>
+<figure class="highlight"><figcaption><span>themes/light/_config.yml</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">widgets:&#10;- search&#10;- category&#10;- tag&#10;- twitter&#10;&#10;twitter:&#10;  username: stueth&#10;  show_replies: false&#10;  tweet_count: 3&#10;  widget_id: 411983651094536192&#10;  follow_button: true&#10;  show_follower_count: false</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Add the following to the bottom of your themes layout/_partial/after_footer.ejs file:</li>
+</ul>
+<figure class="highlight"><figcaption><span>themes/light/layout/_partial/after_footer.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;% if (config.twitter_follow_button)&#123; %&#62;&#10;&#60;script type=&#34;text/javascript&#34;&#62;&#10;(function()&#123;&#10;  var twitterWidgets = document.createElement(&#39;script&#39;);&#10;  twitterWidgets.type = &#39;text/javascript&#39;;&#10;  twitterWidgets.async = true;&#10;  twitterWidgets.src = &#39;//platform.twitter.com/widgets.js&#39;;&#10;  document.getElementsByTagName(&#39;head&#39;)[0].appendChild(twitterWidgets);&#10;&#125;)();&#10;&#60;/script&#62;&#10;&#60;% &#125; %&#62;&#10;&#10;&#60;% if (config.twitter_username)&#123; %&#62;&#10;&#60;script type=&#34;text/javascript&#34;&#62;&#10;(function(d,s,id)&#123;&#10;  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?&#39;http&#39;:&#39;https&#39;;if(!d.getElementById(id))&#123;js=d.createElement(s);js.id=id;js.src=p+&#34;://platform.twitter.com/widgets.js&#34;;fjs.parentNode.insertBefore(js,fjs);&#125;&#125;)(document,&#34;script&#34;,&#34;twitter-wjs&#34;);&#10;&#60;/script&#62;&#10;&#60;% &#125; %&#62;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Create this twitter.ejs file in your theme’s _widget folder:</li>
+</ul>
+<figure class="highlight"><figcaption><span>themes/light/layout/_widget/twitter.ejs</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;% if (config.twitter_username)&#123; %&#62;&#10;&#60;div class=&#34;widget twitter&#34;&#62;&#10;  &#60;h3 class=&#34;title&#34;&#62;Latest Tweets&#60;/h3&#62;&#10;  &#60;ul id=&#34;tweets&#34;&#62;&#10;    &#60;a class=&#34;twitter-timeline&#34; data-dnt=&#34;true&#34; href=&#34;https://twitter.com/&#60;%= config.twitter_username %&#62;&#34;  &#10;      data-widget-id=&#60;%= config.twitter_widget_id %&#62;  data-link-color=&#34;#1863a1&#34; &#10;      data-tweet-limit=&#34;&#60;%= config.twitter_tweet_count %&#62;&#34; &#10;      data-chrome=&#34;noheader nofooter transparent noscrollbar&#34;&#62;Tweets by @&#60;%= config.twitter_username %&#62;&#60;/a&#62;&#10;  &#60;/ul&#62;&#10;  &#60;% if (config.twitter_follow_button)&#123; %&#62;&#10;    &#60;a href=&#34;http://twitter.com/&#60;%= config.twitter_username %&#62;&#34; class=&#34;twitter-follow-button&#34; &#10;      data-show-count=&#34;&#60;%= config.twitter_show_follower_count %&#62;&#34;&#62;Follow @&#60;%= config.twitter_username %&#62;&#60;/a&#62;&#10;  &#60;% &#125; %&#62;&#10;&#60;/div&#62;&#10;&#60;% &#125; %&#62;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Then add any styling changes in you theme’s source/css/_partial/sidebar.styl</li>
+</ul>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Web-Development/">Web Development</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/hexo/">hexo</a>, <a href="/tags/octopress/">octopress</a>, <a href="/tags/static-site-generators/">static site generators</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:stuaroo.github.io/biskillpoints-blog">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">Reporting Services: toggling issues with multiple rows</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/31/migrating-from-octopress-to-hexo/">Migrating from Octopress to Hexo</a>
+      </li>
+    
+      <li>
+        <a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">Analysis Services: service refuses to start with XML parsing error</a>
+      </li>
+    
+      <li>
+        <a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/">Quick thoughts after taking Microsoft Exam 70-461</a>
+      </li>
+    
+      <li>
+        <a href="/2014/03/28/t-sql-tips-transition-school-to-industry/">T-SQL Tips for Transitioning from School to Industry</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Analytics/">Analytics</a><small>1</small></li>
+  
+    <li><a href="/categories/Reporting/">Reporting</a><small>1</small></li>
+  
+    <li><a href="/categories/SQL/">SQL</a><small>3</small></li>
+  
+    <li><a href="/categories/Web-Development/">Web Development</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/asp-net/">asp.net</a><small>2</small></li>
+  
+    <li><a href="/tags/c/">c#</a><small>3</small></li>
+  
+    <li><a href="/tags/certification-exams/">certification exams</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/microsoft/">microsoft</a><small>1</small></li>
+  
+    <li><a href="/tags/octopress/">octopress</a><small>4</small></li>
+  
+    <li><a href="/tags/sargable/">sargable</a><small>1</small></li>
+  
+    <li><a href="/tags/snippets/">snippets</a><small>3</small></li>
+  
+    <li><a href="/tags/ssas/">ssas</a><small>1</small></li>
+  
+    <li><a href="/tags/ssrs/">ssrs</a><small>1</small></li>
+  
+    <li><a href="/tags/static-site-generators/">static site generators</a><small>1</small></li>
+  
+    <li><a href="/tags/t-sql/">t-sql</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget twitter">
+  <h3 class="title">Latest Tweets</h3>
+  <ul id="tweets">
+  	<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/stueth"  data-widget-id=411983651094536192  data-link-color="#1863a1" data-tweet-limit="3" data-chrome="noheader nofooter transparent noscrollbar">Tweets by @stueth</a>
+  </ul>
+  
+    <a href="http://twitter.com/stueth" class="twitter-follow-button" data-show-count="false">Follow @stueth</a>
+  
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Stu Baker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'plusonetobi';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.type = 'text/javascript';
+  twitterWidgets.async = true;
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+<script type="text/javascript">
+(function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}})(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ASP.NET Repeaters and the ItemDataBound event | BI Skill Points</title>
+  <meta name="author" content="Stu Baker">
+  
+  <meta name="description" content="When I first started using Repeater controls in ASP.NET, I would only ever use ItemTemplate to define the specifics of each row.  After creating a few">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="ASP.NET Repeaters and the ItemDataBound event"/>
+  <meta property="og:site_name" content="BI Skill Points"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="BI Skill Points" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">BI Skill Points</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-12-10T08:54:36.000Z"><a href="/2013/12/10/asp-dot-net-repeaters-and-the-itemdatabound-event/">2013-12-10</a></time>
+      
+      
+  
+    <h1 class="title">ASP.NET Repeaters and the ItemDataBound event</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>When I first started using Repeater controls in ASP.NET, I would only ever use ItemTemplate to define the specifics of each row.  After creating a few Repeaters and being forced to wrap html table elements around them, I started to think there must be a better way.  Eventually I stumbled upon examples online showing the use of HeaderTemplate and FooterTemplate for just this purpose.</p>
+<figure class="highlight xml"><figcaption><span>HeaderTemplate and FooterTemplate containing table elements</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">asp:Repeater</span> <span class="attribute">ID</span>=<span class="value">"rptPeople"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> <span class="attribute">OnItemDataBound</span>=<span class="value">"rptPeople_ItemDataBound"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">HeaderTemplate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">table</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">th</span> <span class="attribute">colspan</span>=<span class="value">"4"</span>&gt;</span>People List<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">HeaderTemplate</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">ItemTemplate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">asp:Label</span> <span class="attribute">ID</span>=<span class="value">"lblPersonId"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> </span><br><span class="line">        <span class="attribute">Text</span>=<span class="value">'&lt;%# Eval("PersonId") %&gt;'</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">asp:TextBox</span> <span class="attribute">ID</span>=<span class="value">"txtLastName"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> </span><br><span class="line">        <span class="attribute">Text</span>=<span class="value">'&lt;%# Eval("LastName") %&gt;'</span>&gt;</span><span class="tag">&lt;/<span class="title">asp:TextBox</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">asp:TextBox</span> <span class="attribute">ID</span>=<span class="value">"txtFirstName"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> </span><br><span class="line">        <span class="attribute">Text</span>=<span class="value">'&lt;%# Eval("FirstName") %&gt;'</span>&gt;</span><span class="tag">&lt;/<span class="title">asp:TextBox</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">asp:Button</span> <span class="attribute">ID</span>=<span class="value">"btnDeletePerson"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> <span class="attribute">Text</span>=<span class="value">"Delete"</span> </span><br><span class="line">        <span class="attribute">OnClientClick</span>=<span class="value">"return confirm('Are you sure you want to delete?');"</span> </span><br><span class="line">        <span class="attribute">OnClick</span>=<span class="value">"btnDeletePerson_Click"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">ItemTemplate</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">FooterTemplate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">FooterTemplate</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">asp:Repeater</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>That looks a lot better, but it also created unexpected problems in the ItemDataBound event.  I’d always assumed that ItemDataBound only fired in the ItemTemplate, as that is where you bind specific item data through each iteration of the Repeater (plus they both start with ‘Item’, obvious yes?). Little did I know that HeaderTemplate and FooterTemplate also fire the ItemDataBound event.</p>
+<p>So of course I added a HeaderTemplate and FooterTemplate to some legacy code and started receiving my favorite error “object reference not set to an instance of an object.” The problem was the original ItemDataBound event was trying to find controls and was looking in the Header which did not having said controls (causing the error).</p>
+<p>To fix this, you simply need to tell your code to only run when fired from the ItemTemplate<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>:</p>
+<figure class="highlight csharp"><figcaption><span>if statement checks for ListItemTypes</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">rptPeople_ItemDataBound</span>(<span class="params"><span class="keyword">object</span> sender, RepeaterItemEventArgs e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)</span><br><span class="line">    &#123;</span><br><span class="line">      Label lblPersonId = (Label)((Control)sender).Parent.FindControl(<span class="string">"lblPersonId"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Sources:</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="http://forums.asp.net/t/1495510.aspx" target="_blank" rel="external">ASP.NET forum: Cannot find control in Repeaters ItemDataBound</a> <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Web-Development/">Web Development</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/asp-net/">asp.net</a>, <a href="/tags/c/">c#</a>, <a href="/tags/snippets/">snippets</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:stuaroo.github.io/biskillpoints-blog">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">Reporting Services: toggling issues with multiple rows</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/31/migrating-from-octopress-to-hexo/">Migrating from Octopress to Hexo</a>
+      </li>
+    
+      <li>
+        <a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">Analysis Services: service refuses to start with XML parsing error</a>
+      </li>
+    
+      <li>
+        <a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/">Quick thoughts after taking Microsoft Exam 70-461</a>
+      </li>
+    
+      <li>
+        <a href="/2014/03/28/t-sql-tips-transition-school-to-industry/">T-SQL Tips for Transitioning from School to Industry</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Analytics/">Analytics</a><small>1</small></li>
+  
+    <li><a href="/categories/Reporting/">Reporting</a><small>1</small></li>
+  
+    <li><a href="/categories/SQL/">SQL</a><small>3</small></li>
+  
+    <li><a href="/categories/Web-Development/">Web Development</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/asp-net/">asp.net</a><small>2</small></li>
+  
+    <li><a href="/tags/c/">c#</a><small>3</small></li>
+  
+    <li><a href="/tags/certification-exams/">certification exams</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/microsoft/">microsoft</a><small>1</small></li>
+  
+    <li><a href="/tags/octopress/">octopress</a><small>4</small></li>
+  
+    <li><a href="/tags/sargable/">sargable</a><small>1</small></li>
+  
+    <li><a href="/tags/snippets/">snippets</a><small>3</small></li>
+  
+    <li><a href="/tags/ssas/">ssas</a><small>1</small></li>
+  
+    <li><a href="/tags/ssrs/">ssrs</a><small>1</small></li>
+  
+    <li><a href="/tags/static-site-generators/">static site generators</a><small>1</small></li>
+  
+    <li><a href="/tags/t-sql/">t-sql</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget twitter">
+  <h3 class="title">Latest Tweets</h3>
+  <ul id="tweets">
+  	<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/stueth"  data-widget-id=411983651094536192  data-link-color="#1863a1" data-tweet-limit="3" data-chrome="noheader nofooter transparent noscrollbar">Tweets by @stueth</a>
+  </ul>
+  
+    <a href="http://twitter.com/stueth" class="twitter-follow-button" data-show-count="false">Follow @stueth</a>
+  
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Stu Baker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'plusonetobi';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.type = 'text/javascript';
+  twitterWidgets.async = true;
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+<script type="text/javascript">
+(function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}})(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>

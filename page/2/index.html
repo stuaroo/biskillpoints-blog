@@ -1,0 +1,449 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Page 2 | BI Skill Points</title>
+  <meta name="author" content="Stu Baker">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="BI Skill Points"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="BI Skill Points" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">BI Skill Points</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-12-19T08:43:38.000Z"><a href="/2013/12/19/t-sql-date-range-from-current-quarter/">2013-12-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/12/19/t-sql-date-range-from-current-quarter/">T-SQL date range from the current quarter</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>A <a href="http://stackoverflow.com/q/20672016/1657324" target="_blank" rel="external">recent question on StackOverflow</a> got me pondering about dates and quarters.  The user wanted to return data where the date is in the current quarter.  After some Google searches, I found this great solution to <a href="http://www.sqlservercurry.com/2009/05/find-first-and-last-day-of-current.html" target="_blank" rel="external">find the first and last day of the quarter</a> from SQL Server Curry.  From there I just added 1 day to the last day of the quarter (to make sure we are <a href="http://www.kebabshopblues.co.uk/2009/08/30/one-second-to-midnight-datetimes-in-sql-server-2005/" target="_blank" rel="external">truly capturing all date/time values</a> in the quarter) and put it all in the <code>WHERE</code> clause:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> YourTable</span><br><span class="line"><span class="keyword">WHERE</span> DateColumn &gt;= <span class="keyword">DATEADD</span>(qq,<span class="keyword">DATEDIFF</span>(qq,<span class="number">0</span>,<span class="keyword">GETDATE</span>()),<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">AND</span> DateColumn &lt; <span class="keyword">DATEADD</span>(dd,<span class="number">1</span>,<span class="keyword">DATEADD</span>(qq,<span class="keyword">DATEDIFF</span>(qq,-<span class="number">1</span>,<span class="keyword">GETDATE</span>()),-<span class="number">1</span>))</span></span><br></pre></td></tr></table></figure>
+<p>You may be wondering ‘why not just compare the quarter and year of the DateColumn to the current date?’ e.g. <code>WHERE YEAR(DateColumn) = YEAR(GETDATE()) AND DATEPART(QUARTER,DateColumn) = DATEPART(QUARTER,GETDATE())</code>  You can do that and it works fine for small datasets, but using functions on your column in a <code>WHERE</code> clause will result in a non-<a href="http://en.wikipedia.org/wiki/Sargable" target="_blank" rel="external">sargable</a> query, meaning it can’t take advantage of an index on <code>DateColumn</code>.  So go with the uglier, sargable query if you are looking to optimize performance.<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>I think sargability is a super interesting optimization topic.  In case you were curious, sargable is short for Search ARGument ABLE, and here’s a few more articles on the topic if you would like to know more: <a href="http://msmvps.com/blogs/robfarley/archive/2010/01/22/sargable-functions-in-sql-server.aspx" target="_blank" rel="external">Sargable functions in SQL Server by Rob Farley</a> and <a href="http://stackoverflow.com/q/799584/1657324" target="_blank" rel="external">stackoverflow: what makes a sql statement sargable</a>. <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-12-13T09:40:21.000Z"><a href="/2013/12/13/customizing-octopress/">2013-12-13</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/12/13/customizing-octopress/">Customizing Octopress</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>I recently made a few customizations to my Octopress environment using resources/blog articles scattered about the web; all were surprisingly easy and definitely added value.  Here are my favorites if you want to take a stab at any of these yourself:</p>
+<h2 id="hiding-specific-categories-of-posts-from-the-front-page"><a href="http://arshad.github.io/blog/2012/05/10/recipe-hiding-posts-from-the-octopress-front-page/" target="_blank" rel="external">Hiding specific categories of posts from the front page</a></h2>
+<p>I particularly wanted to do this for my Snippets category, as sometimes I want to take notes or describe the logic of a concept (or simply have a basic example that I can copy in the future), but I don’t particularly want that showing up as the top article on my front page either.  Best of both worlds by following the simple changes in this article.</p>
+<h2 id="change-the-preview-server-to-ruby-thin-server"><a href="http://blog.geoffpetrie.com/blog/2012/10/14/octopress-change-the-default-preview-server/" target="_blank" rel="external">Change the preview server to Ruby Thin Server</a></h2>
+<p>I did this trying to solve a different problem; it didn’t help then but I liked the server so much that I’ve stuck with it. Very easy to get it up and running too.</p>
+<h2 id="footnote-styling"><a href="http://hiltmon.com/blog/2013/05/08/octopress-now-has-footnotes/" target="_blank" rel="external">Footnote styling</a></h2>
+<p>I really liked the idea of using footnotes for my sources, but by default they are rather gigantic and widely spaced.  Some simple additions to <code>sass/custom/_styles.css</code> and your footnotes look like they are supposed to: compact and well-spaced.  I’ll even add an example footnote<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> for you to see what these changes look like.</p>
+<h2 id="filter-repositories-from-github-sidebar"><a href="http://blog.codebykat.com/2013/05/20/three-octopress-tweaks/#github-aside" target="_blank" rel="external">Filter repositories from Github sidebar</a></h2>
+<p>As the author of that linked post so aptly points out, it doesn’t make a lot of sense to show off the repository your blog is on if you are being hosted by Github Pages.  Also, some projects you just don’t want to show off, and a few lines of code will make sure they don’t appear under the Github Repos of your blog.</p>
+<h2 id="use-monokai-color-scheme-for-code-block-syntax-highlighting"><a href="https://github.com/ragle/Monokai-Sublime-Text-Octopress" target="_blank" rel="external">Use Monokai color scheme for code block syntax highlighting</a></h2>
+<p>Seems like lots of people want to slightly alter the built in syntax highlighting.  I like the Monokai theme from Sublime Text 2, and luckily I found a <a href="https://github.com/ragle/Monokai-Sublime-Text-Octopress" target="_blank" rel="external">nice patch</a> that will switch to that color scheme without much additional work.  You can also find great, detailed posts if you are more interested in the <a href="http://blog.alestanis.com/2013/02/04/octopress-and-the-twilight-color-scheme/" target="_blank" rel="external">Twilight color scheme</a> or a more <a href="http://blog.codebykat.com/2013/05/23/gorgeous-octopress-codeblocks-with-coderay/" target="_blank" rel="external">Github-style color scheme</a>.  Keep in mind though that some of these will require you to change your markdown processor and swap in a different syntax highlighter.  I preferred to stick with the default Pygments syntax highlighting and rdiscount markdown processor, and I was lucky to find a great resource already created.  Check out the prettiness:</p>
+
+<h2 id="add-tweets-to-the-sidebar-without-the-ugly-widget"><a href="http://blog.jonathanrwallace.com/blog/2013/09/21/octopress-love-twitter-update/" target="_blank" rel="external">Add tweets to the sidebar without the ugly widget</a></h2>
+<p>I don’t tweet a lot, but when I do, I want them to look like they belong on the page.  After Twitter changed its API to require authentication, it effectively got dropped from Octopress.  But a <a href="https://github.com/imathis/octopress/pull/1311" target="_blank" rel="external">nice Github contributor</a> figured out a way to continue displaying tweets.  Essentially, you create a Twitter widget and pull out the data-widget-id from the generated code and plop that into the _config.yaml file.  Looks great on the sidebar too!</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>I really like these footnotes.  You can even put <code>code blocks</code> in them and everything.  Great place to put <a href="http://imgur.com/r/cats/YYYC3bW" target="_blank" rel="external">ancillary links</a> that people may or may not care to look at/read. <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-12-10T08:54:36.000Z"><a href="/2013/12/10/asp-dot-net-repeaters-and-the-itemdatabound-event/">2013-12-10</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/12/10/asp-dot-net-repeaters-and-the-itemdatabound-event/">ASP.NET Repeaters and the ItemDataBound event</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>When I first started using Repeater controls in ASP.NET, I would only ever use ItemTemplate to define the specifics of each row.  After creating a few Repeaters and being forced to wrap html table elements around them, I started to think there must be a better way.  Eventually I stumbled upon examples online showing the use of HeaderTemplate and FooterTemplate for just this purpose.</p>
+<figure class="highlight xml"><figcaption><span>HeaderTemplate and FooterTemplate containing table elements</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">asp:Repeater</span> <span class="attribute">ID</span>=<span class="value">"rptPeople"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> <span class="attribute">OnItemDataBound</span>=<span class="value">"rptPeople_ItemDataBound"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">HeaderTemplate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">table</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">th</span> <span class="attribute">colspan</span>=<span class="value">"4"</span>&gt;</span>People List<span class="tag">&lt;/<span class="title">th</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">HeaderTemplate</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">ItemTemplate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">asp:Label</span> <span class="attribute">ID</span>=<span class="value">"lblPersonId"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> </span><br><span class="line">        <span class="attribute">Text</span>=<span class="value">'&lt;%# Eval("PersonId") %&gt;'</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">asp:TextBox</span> <span class="attribute">ID</span>=<span class="value">"txtLastName"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> </span><br><span class="line">        <span class="attribute">Text</span>=<span class="value">'&lt;%# Eval("LastName") %&gt;'</span>&gt;</span><span class="tag">&lt;/<span class="title">asp:TextBox</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">asp:TextBox</span> <span class="attribute">ID</span>=<span class="value">"txtFirstName"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> </span><br><span class="line">        <span class="attribute">Text</span>=<span class="value">'&lt;%# Eval("FirstName") %&gt;'</span>&gt;</span><span class="tag">&lt;/<span class="title">asp:TextBox</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">asp:Button</span> <span class="attribute">ID</span>=<span class="value">"btnDeletePerson"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> <span class="attribute">Text</span>=<span class="value">"Delete"</span> </span><br><span class="line">        <span class="attribute">OnClientClick</span>=<span class="value">"return confirm('Are you sure you want to delete?');"</span> </span><br><span class="line">        <span class="attribute">OnClick</span>=<span class="value">"btnDeletePerson_Click"</span> /&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">ItemTemplate</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">FooterTemplate</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">FooterTemplate</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">asp:Repeater</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>That looks a lot better, but it also created unexpected problems in the ItemDataBound event.  I’d always assumed that ItemDataBound only fired in the ItemTemplate, as that is where you bind specific item data through each iteration of the Repeater (plus they both start with ‘Item’, obvious yes?). Little did I know that HeaderTemplate and FooterTemplate also fire the ItemDataBound event.</p>
+<p>So of course I added a HeaderTemplate and FooterTemplate to some legacy code and started receiving my favorite error “object reference not set to an instance of an object.” The problem was the original ItemDataBound event was trying to find controls and was looking in the Header which did not having said controls (causing the error).</p>
+<p>To fix this, you simply need to tell your code to only run when fired from the ItemTemplate<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>:</p>
+<figure class="highlight csharp"><figcaption><span>if statement checks for ListItemTypes</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">rptPeople_ItemDataBound</span>(<span class="params"><span class="keyword">object</span> sender, RepeaterItemEventArgs e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (e.Item.ItemType == ListItemType.AlternatingItem || e.Item.ItemType == ListItemType.Item)</span><br><span class="line">    &#123;</span><br><span class="line">      Label lblPersonId = (Label)((Control)sender).Parent.FindControl(<span class="string">"lblPersonId"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Sources:</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="http://forums.asp.net/t/1495510.aspx" target="_blank" rel="external">ASP.NET forum: Cannot find control in Repeaters ItemDataBound</a> <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-11-26T05:05:19.000Z"><a href="/2013/11/25/octopress-generating-empty-html-pages/">2013-11-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/11/25/octopress-generating-empty-html-pages/">Octopress generating empty html pages</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>So you probably just tried a <code>rake generate</code> on your Octopress blog only to end up with a blank index.html in your public folder and a few empty posts in your blog folder, ya?</p>
+<p>When this occurred for me, the problem happened right as I started trying out the fancy syntax highlighting for code blocks.  Posts with plain vanilla code blocks generated just fine, but as soon as I added languages for highlighting at the start of each block I saw empty posts/pages.  After many searches for almost every synonym of ‘empty’ you can think of, I finally solved my problem through a combination of the following:</p>
+<h2 id="check-if-python-is-installed">Check if Python is installed</h2>
+<p>“But Octopress is in Ruby, why do I need Python?”  Octopress uses <a href="http://pygments.org/" target="_blank" rel="external">Pygments</a> for syntax highlighting, which is built in Python, and it uses the pygments.rb gem to use said Python file.</p>
+<h2 id="ensure-pygments-is-installed-in-python">Ensure Pygments is installed in Python</h2>
+<p>This was one of my problems.  I already had Python from some earlier messing around, but didn’t know I needed to separately download Pygments and install it.  Well, ya do.  Here’s the <a href="http://pygments.org/download/" target="_blank" rel="external">download site</a>, or you can use some <code>easy_install</code> fanciness if you prefer.</p>
+<h2 id="make-sure-your-path-for-python-is-set-correctly">Make sure your PATH for Python is set correctly</h2>
+<p>Another one of my problems.  I happened upon this from a <a href="http://stackoverflow.com/a/14202515/1657324" target="_blank" rel="external">stackoverflow user having similar problems with code blocks</a>.  Here are some good instructions for <a href="http://stackoverflow.com/a/4855685/1657324" target="_blank" rel="external">updating PATH in Windows</a> from another SO question, and yet another SO answer on <a href="http://stackoverflow.com/a/12592280/1657324" target="_blank" rel="external">possible mistakes when updating PATH</a>.  Most useful to me: be sure to <strong>exit and restart the window you are testing in</strong>.  I didn’t do that, and it caused a lot more headaches.</p>
+<h2 id="update-pygments-rb-to-a-newer-version">Update pygments.rb to a newer version</h2>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bundle update pygments.rb</span><br></pre></td></tr></table></figure>
+<p>Not sure if I really needed to do this, but one of my searches led me to this <a href="http://stackoverflow.com/a/14088936/1657324" target="_blank" rel="external">SO answer on octopress generating blank files</a>, and figured updating pygments.rb couldn’t hurt.  Running the above resulted in pygments.rb updating from 0.3.4 to 0.3.7.  I then updated the version in my Gemfile in the octopress main folder and was good to go.<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+<p>Doing all this did not initially solve my problem, because I never exited my command-line window to let my PATH do its magic.  But the next day everything was working again, and I was scratching my head (until I found that comment on closing and re-opening the window). Hopefully something here will help you with this horrible problem!</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p>incidentally, I am so new to Ruby I didn’t know how to update a Gemfile.  If you are in the same boat, just open Gemfile in a text editor to see all the gems Octopress is using and their version.  When you update a gem with <code>bundle update</code>, you download the new version but also keep a copy of the old version in your gems folder.  So to update what Octopress uses, you need to update the version number in your Gemfile <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-11-25T00:47:45.000Z"><a href="/2013/11/24/updating-data-using-the-entity-framework/">2013-11-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/11/24/updating-data-using-the-entity-framework/">Updating data using the Entity Framework</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>How do you update your database using C# and the Entity Framework?<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>  Basically you map an object to your database record, perform your change (be it changing a property on an update, or removing an object on a delete), and save changes to the Entity.  Here are a few examples using LINQ to map objects:<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></p>
+<figure class="highlight csharp"><figcaption><span>with context as your Entity</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Entities context = <span class="keyword">new</span> Entities();</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><figcaption><span>Update</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Person p = (<span class="keyword">from</span> p <span class="keyword">in</span> context.Person</span><br><span class="line">            <span class="keyword">where</span> p.LastName == <span class="string">"Rodriguez"</span></span><br><span class="line">            <span class="keyword">select</span> p).FirstOrDefault();</span><br><span class="line"></span><br><span class="line">p.FirstName = <span class="string">"Robert"</span>;</span><br><span class="line"></span><br><span class="line">context.SaveChanges();</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><figcaption><span>Delete</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Person p = (<span class="keyword">from</span> p <span class="keyword">in</span> context.Person</span><br><span class="line">            <span class="keyword">where</span> p.LastName == <span class="string">"Rodriguez"</span></span><br><span class="line">            <span class="keyword">select</span> p).FirstOrDefault();</span><br><span class="line"></span><br><span class="line">context.Person.DeleteObject(p);</span><br><span class="line"></span><br><span class="line">context.SaveChanges();</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><figcaption><span>Insert</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Person p = <span class="keyword">new</span> Person() &#123; FirstName = <span class="string">"Robert"</span>, LastName = <span class="string">"Rodriguez"</span> &#125;;</span><br><span class="line"></span><br><span class="line">context.AddToPerson(p);</span><br><span class="line"></span><br><span class="line">context.SaveChanges();</span><br></pre></td></tr></table></figure>
+<p>Sources:</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="http://www.entityframeworktutorial.net/update-entity-in-entity-framework.aspx" target="_blank" rel="external">Update an Entity with ObjectContext</a> <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a href="http://blogs.msdn.com/b/wriju/archive/2008/08/21/ado-net-entity-insert-update-and-delete.aspx" target="_blank" rel="external">ADO.NET Entity: Insert Update and Delete</a> <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/" class="alignleft prev">Prev</a>
+  
+  
+    <a href="/page/3/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:stuaroo.github.io/biskillpoints-blog">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">Reporting Services: toggling issues with multiple rows</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/31/migrating-from-octopress-to-hexo/">Migrating from Octopress to Hexo</a>
+      </li>
+    
+      <li>
+        <a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">Analysis Services: service refuses to start with XML parsing error</a>
+      </li>
+    
+      <li>
+        <a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/">Quick thoughts after taking Microsoft Exam 70-461</a>
+      </li>
+    
+      <li>
+        <a href="/2014/03/28/t-sql-tips-transition-school-to-industry/">T-SQL Tips for Transitioning from School to Industry</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Analytics/">Analytics</a><small>1</small></li>
+  
+    <li><a href="/categories/Reporting/">Reporting</a><small>1</small></li>
+  
+    <li><a href="/categories/SQL/">SQL</a><small>3</small></li>
+  
+    <li><a href="/categories/Web-Development/">Web Development</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/asp-net/">asp.net</a><small>2</small></li>
+  
+    <li><a href="/tags/c/">c#</a><small>3</small></li>
+  
+    <li><a href="/tags/certification-exams/">certification exams</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/microsoft/">microsoft</a><small>1</small></li>
+  
+    <li><a href="/tags/octopress/">octopress</a><small>4</small></li>
+  
+    <li><a href="/tags/sargable/">sargable</a><small>1</small></li>
+  
+    <li><a href="/tags/snippets/">snippets</a><small>3</small></li>
+  
+    <li><a href="/tags/ssas/">ssas</a><small>1</small></li>
+  
+    <li><a href="/tags/ssrs/">ssrs</a><small>1</small></li>
+  
+    <li><a href="/tags/static-site-generators/">static site generators</a><small>1</small></li>
+  
+    <li><a href="/tags/t-sql/">t-sql</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget twitter">
+  <h3 class="title">Latest Tweets</h3>
+  <ul id="tweets">
+  	<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/stueth"  data-widget-id=411983651094536192  data-link-color="#1863a1" data-tweet-limit="3" data-chrome="noheader nofooter transparent noscrollbar">Tweets by @stueth</a>
+  </ul>
+  
+    <a href="http://twitter.com/stueth" class="twitter-follow-button" data-show-count="false">Follow @stueth</a>
+  
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Stu Baker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'plusonetobi';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.type = 'text/javascript';
+  twitterWidgets.async = true;
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+<script type="text/javascript">
+(function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}})(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>

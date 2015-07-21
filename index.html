@@ -1,0 +1,443 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>BI Skill Points</title>
+  <meta name="author" content="Stu Baker">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="BI Skill Points"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="BI Skill Points" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">BI Skill Points</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-27T05:16:36.000Z"><a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">2015-06-26</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">Reporting Services: toggling issues with multiple rows</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="the-problem">The Problem</h2>
+<p>Using row visibility to enable toggling on more than one tablix row causes odd behavior.  Drill downs do not work as expected, and all data shows when the report is initially run</p>
+<h3 id="some-background">Some Background</h3>
+<p>A colleague of mine recently encountered this issue and it brought me back to when I was first learning SSRS and experienced similar odd behavior.  Reporting Services has a <em>unique</em> way of doing things sometimes, which makes it a challenging learning process to figure your way around problems. So I’ll recreate how you might run into this problem, and show the general way to fix this.</p>
+<h2 id="problem-setup">Problem Setup</h2>
+<p>First we’ll need a query/dataset to build our tablix on.  I’ve been messing around with the <a href="https://archive.org/details/stackexchange">StackExchange databases</a> ever since I found out they are downloadable, so this will be my demo database.  I’m working with one of the smaller ones, <a href="http://dba.stackexchange.com/">DBA Stack Exchange</a>, in this example.  (footnote?) As an aside, for a great article on downloading SE databases and importing data to your SQL Server, see <a href="http://www.brentozar.com/archive/2014/01/how-to-query-the-stackexchange-databases/">this article on brentozar.com</a>.</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-01T01:00:28.000Z"><a href="/2015/05/31/migrating-from-octopress-to-hexo/">2015-05-31</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/05/31/migrating-from-octopress-to-hexo/">Migrating from Octopress to Hexo</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>One of the original reasons  I started using Octopress for blogging is I thought it would increase my motivation to learn Ruby.  However, after spending some time mucking about with <a href="./2013/12/13/customizing-octopress/">various Octopress hacks</a>, I decided Ruby just might not be for me.</p>
+<p>So I did some searching around to see what other <a href="https://www.staticgen.com/">static site generators</a> might interest me, and low and behold I stumbled onto <a href="http://hexo.io/">Hexo</a>.  Hexo is written in JavaScript, and runs on the Node.js and is growing in popularity.  I’ve tinkered with Node.js some in the past, and since JavaScript is a language I’m more comfortable with I decided to take the plunge.  Here are some things I found that may help should you decide to migrate this way too.</p>
+<h2 id="content-migration">Content Migration</h2>
+<p>Incredibly easy, I loved it.  Simply move your markdown files from Octopress <code>source/_posts</code> to your Hexo <code>source/_posts</code>.  Done, posts are ready to go.  One other setting you may want to modify is the default name format for new posts.  Simply open up the <code>_config.yml</code> file in Hexo’s main directory and change <code>new_post_name</code> to:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new_post_name: :year-:month-:day-:title.md</span><br></pre></td></tr></table></figure>
+<p>This will give your new files the same file name format as the Octopress default.</p>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/05/31/migrating-from-octopress-to-hexo/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-01T03:00:48.000Z"><a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">2015-04-30</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">Analysis Services: service refuses to start with XML parsing error</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="the-problem">The problem</h2>
+<p>The SQL Server Analysis Services (SSAS) service cannot be started and Event Viewer lists the following error:</p>
+<blockquote>
+<p>The service cannot be started: XML parsing failed at line 1, column 8193: Illegal qualified name character.</p>
+</blockquote>
+<h2 id="investigating">Investigating</h2>
+<p>After doing some searches for the above error, I came upon exactly one post detailing something similar.  That <a href="http://prologika.com/CS/blogs/blog/archive/2011/04/23/analysis-services-refusing-to-start.aspx">post on Teo Lachev’s blog</a> listed an error involving an ‘Illegal xml character’ and a different column than the error here, but it was close enough to be worth investigating.  He mentioned his error was caused by a corrupt master.vmp file in <code>C:\Program Files\Microsoft SQL Server\&lt;SSAS Version&gt;\OLAP\Data</code>.  For those like me who have no idea what master.vmp does, luckily some <a href="http://blogs.msdn.com/b/sqlserverfaq/archive/2009/07/08/tampering-master-vmp-file-may-result-in-losing-all-analysis-services-databases.aspx">other people on the Internet</a> do.  From that article:</p>
+<blockquote>
+<p>“The master.vmp file is the master version map that contains the GUIDS for all of the objects and the version of each object that currently exists on the server.”</p>
+</blockquote>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-05-01T22:02:08.000Z"><a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/">2014-05-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/">Quick thoughts after taking Microsoft Exam 70-461</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <ul>
+<li>
+<p>44 questions, with 2 hours provided to answer the questions and a 700 score needed to pass</p>
+</li>
+<li>
+<p>To study I primarily used the official training kit (<a href="http://www.amazon.com/Training-Kit-Exam-70-461-Microsoft/dp/0735666059">Amazon link</a>) and drew from what I learned on the job writing queries for 9 months.</p>
+</li>
+<li>
+<p>Learned a lot from the book, but practice tests on the included CD were WORTHLESS in preparing for the test.  The only two points they helped on 1) Make sure you pay attention to the actual question asked (e.g. if it asks for a <code>MAX</code> don’t choose the answer with an <code>AVG</code>), and 2) some of the questions/answers deal with vocabulary terms you should become familiar with (transaction isolation levels for me).  The thing that bothered me most about the CD practice test: its ease makes you underestimate the real test.</p>
+</li>
+<li>
+<p><a href="https://www.microsoft.com/learning/en-us/exam-70-461.aspx#skills">Microsoft’s outline</a> really does a good job of laying out what to expect.  The areas I really struggled with were a lot of things I use infrequently or have never used: Triggers, transaction isolation levels, XML output.  I’ve pasted in the MS study outline and <strong>bolded</strong> parts that I think would have helped a bunch had I been more familiar with them.</p>
+</li>
+</ul>
+      
+    </div>
+    <footer>
+      
+        
+          <div class="alignleft">
+            <a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/#more" class="more-link">Read More</a>
+          </div>
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2014-03-28T21:53:57.000Z"><a href="/2014/03/28/t-sql-tips-transition-school-to-industry/">2014-03-28</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/03/28/t-sql-tips-transition-school-to-industry/">T-SQL Tips for Transitioning from School to Industry</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>It’s been 9 months since I’ve gone from a pure student who had only learned T-SQL in a classroom to someone who uses it everyday as a part of my job.  In that time I’ve learned a few lessons that I think are worth sharing.</p>
+<p>How helpful this will be to you will of course depend upon the way your program chose to teach this subject, as well as your previous background experience.</p>
+<h2 id="conditions-on-joins">Conditions on JOINs</h2>
+<p>With a standard <code>INNER JOIN</code>, you can list additional conditions after the <code>INNER JOIN</code> or in the <code>WHERE</code> clause and you’ll have the same query generating the same results:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--Conditions in the WHERE clause</span></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> People <span class="keyword">AS</span> p</span><br><span class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Addresses <span class="keyword">AS</span> a <span class="keyword">ON</span> p.PeopleID = a.PeopleID</span><br><span class="line"><span class="keyword">WHERE</span> p.LastName = <span class="string">'Baratheon'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--Same query/results using conditions on the INNER JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> People <span class="keyword">AS</span> p</span><br><span class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Addresses <span class="keyword">AS</span> a <span class="keyword">ON</span> p.PeopleID = a.PeopleID</span><br><span class="line">        <span class="keyword">AND</span> p.LastName = <span class="string">'Baratheon'</span></span></span><br></pre></td></tr></table></figure>
+<p>However, when working with an <code>OUTER JOIN</code>, conditions in the <code>WHERE</code> clause and conditions on the <code>OUTER JOIN</code> can result in very different results:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--Conditions in the WHERE clause</span></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> People <span class="keyword">AS</span> p</span><br><span class="line">    <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Addresses <span class="keyword">AS</span> a <span class="keyword">ON</span> p.PeopleID = a.PeopleID</span><br><span class="line"><span class="keyword">WHERE</span> p.LastName = <span class="string">'Baratheon'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">--Very different using conditions on the LEFT JOIN</span></span><br><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line"><span class="keyword">FROM</span> People <span class="keyword">AS</span> p</span><br><span class="line">    <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Addresses <span class="keyword">AS</span> a <span class="keyword">ON</span> p.PeopleID = a.PeopleID</span><br><span class="line">        <span class="keyword">AND</span> p.LastName = <span class="string">'Baratheon'</span></span></span><br></pre></td></tr></table></figure>
+<p>The key difference here is that the <code>WHERE</code> clause filters (removes) rows, while the condition on the join specifies that all rows from the left table should be returned but data from the right table should only be displayed when the two conditions (PeopleID and LastName = ‘Baratheon’) match.</p>
+<p>Using our examples above, the first with the <code>WHERE</code> clause will <code>LEFT JOIN</code> Addresses to People and will then remove all rows where the LastName is not ‘Baratheon’.  Our second example with the condition on the join will <code>LEFT JOIN</code> Addresses to People but will display all rows in the People table and only show addresses when LastName is ‘Baratheon’.  Here is an <a href="http://sqlfiddle.com/#!3/39efc/5" target="_blank" rel="external">SQL Fiddle</a> where you can see some example output.  <a href="http://sqlfiddle.com/#!3/39efc/6" target="_blank" rel="external">Query 1</a> gives us two rows (for Robert and Joffrey Baratheon) with an address for Robert, while <a href="http://sqlfiddle.com/#!3/39efc/5" target="_blank" rel="external">query 2</a> lists all People but again only lists an address for Robert.</p>
+<p>The main point to note: though these queries look similar, their results are vastly different.</p>
+<h2 id="be-careful-with-not-and">Be careful with <code>NOT</code> and &lt;&gt;</h2>
+<p>Sometimes you forget a little of the theory that you are drilled on in school when putting knowledge into practice.  Case in point for me was the use of <code>NOT</code>.  When I first started out writing queries at my job, it seemed like the simplest thing in the world when someone asked to see all results except for one or two particular types.  I would just throw my <code>NOT IN</code> in the <code>WHERE</code> clause and go on my merry way.  However, remember in SQL we are working with 3-valued logic which means that an expression can evaluate to true, false or undefined.  Due to this, I started to run into problems when I used a <code>NOT</code> on columns that could contain <code>NULL</code>s, because when you compare NULL to any value the result is undefined and that row is not included in your result set.</p>
+<p>Example time: here is another <a href="http://sqlfiddle.com/#!3/f7197b/1" target="_blank" rel="external">SQL Fiddle</a> listing a few US Presidents and their first, middle, and last names.  When we run our query for presidents who do not have a middle name of Jefferson (using <code>WHERE MiddleName NOT IN ('Jefferson')</code>), we don’t quite get what we expect.  Why?  Because we are working with 3-valued logic, and comparing NULL to a value results in undefined and will not include that row in our result set.  So since Abe and Woodrow Wilson do not have middle names, we do not see them in our results.  This is a very simple example (and one easily corrected by adding <code>OR MiddleName IS NULL</code> to our <code>WHERE</code> clause), but often you will have more complicated problems involving multiple tables when you want to use <code>NOT</code>.  My go-to solution in these situations is to use a <code>LEFT JOIN</code>:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--Using LEFT JOIN instead of NOT keyword</span></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> p1.FirstName, p1.MiddleName, p1.LastName</span><br><span class="line"><span class="keyword">FROM</span> Presidents <span class="keyword">AS</span> p1</span><br><span class="line">    <span class="keyword">LEFT</span> <span class="keyword">JOIN</span> Presidents <span class="keyword">AS</span> p2 <span class="keyword">ON</span> (p1.PresidentID = p2.PresidentID)</span><br><span class="line">        <span class="keyword">AND</span> p2.MiddleName = <span class="string">'Jefferson'</span></span><br><span class="line"><span class="keyword">WHERE</span> p2.PresidentID <span class="keyword">IS</span> <span class="literal">NULL</span></span></span><br></pre></td></tr></table></figure>
+<p>There are several other options you can use (here are a <a href="http://www.dbatodba.com/sql-server/how-tos/typical-solutions-to-avoid-using-not-in-on-sql-server/" target="_blank" rel="external">few more solutions</a> to try).</p>
+<h2 id="some-developers-alias-without-the-keyword-as">Some developers alias without the keyword <code>AS</code></h2>
+<p>When you are trying to find a solution to a problem by searching online, you can quickly get confused by the coding styles some developers use.  The biggest one for me was that the <code>AS</code> keyword for aliasing is optional and some developers do not choose to use it.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--Optional AS for aliasing can get confusing</span></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> peep.FirstName GivenName, peep.LastName SurName, addr.Street HighRoad, addr.City Castle, addr.State Continent</span><br><span class="line"><span class="keyword">FROM</span> People peep</span><br><span class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Addresses addr <span class="keyword">ON</span> peep.PeopleID = addr.PeopleID</span><br><span class="line"><span class="keyword">WHERE</span> peep.LastName = <span class="string">'Stark'</span></span></span><br></pre></td></tr></table></figure>
+<p>You can puzzle this mess out if you’ve been developing for a while, but as a relative beginner this can start to look like gibberish in a hurry.  While there is little you can do to fix most of the examples on the internet, I’d encourage you to continue using <code>AS</code> for aliasing even as you improve your query writing.  Think of it as a way to pay it forward to future students who will use your code to learn.  So to make the above a little more clear:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--AS for aliasing = good!</span></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> peep.FirstName <span class="keyword">AS</span> GivenName, peep.LastName <span class="keyword">AS</span> SurName, addr.Street <span class="keyword">AS</span> HighRoad, addr.City <span class="keyword">AS</span> Castle, addr.State <span class="keyword">AS</span> Continent</span><br><span class="line"><span class="keyword">FROM</span> People <span class="keyword">AS</span> peep</span><br><span class="line">    <span class="keyword">INNER</span> <span class="keyword">JOIN</span> Addresses <span class="keyword">AS</span> addr <span class="keyword">ON</span> peep.PeopleID = addr.PeopleID</span><br><span class="line"><span class="keyword">WHERE</span> peep.LastName = <span class="string">'Stark'</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="using-the-apply-operator">Using the <code>APPLY</code> operator</h2>
+<p>I learned how to use the <code>APPLY</code> operator my first day on the job, and I’ve been amazed since then that it was never covered in my formal education.  You can attempt to make sense of the <a href="http://technet.microsoft.com/en-us/library/ms175156.aspx" target="_blank" rel="external">MSDN article on Using APPLY</a>, but I typically use it in a simple way: if I’m looking to use a <code>TOP 1</code> subquery in my <code>SELECT</code> clause, then it’s time to use an <code>APPLY</code>.  But why bother you ask?  One word: performance.  Whenever I’ve compared execution times and plans, the version with the <code>APPLY</code> outperforms a <code>TOP 1</code> subquery almost every time.</p>
+<p>Going back to our people and addresses example from earlier, I’ve added a column, IsPreferred, for people with multiple addresses.  Now using a typical <code>TOP 1</code> subquery, our query would look like this: <a href="http://sqlfiddle.com/#!3/42ceb/1" target="_blank" rel="external">SQL Fiddle</a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--TOP 1 subquery</span></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> p.FirstName</span><br><span class="line">    , p.LastName</span><br><span class="line">    , (<span class="keyword">SELECT</span> TOP <span class="number">1</span> Street + <span class="string">' '</span> + City + <span class="string">' '</span> + State</span><br><span class="line">       <span class="keyword">FROM</span> Addresses <span class="keyword">AS</span> a</span><br><span class="line">       <span class="keyword">WHERE</span> a.PeopleID = p.PeopleID</span><br><span class="line">       <span class="keyword">ORDER</span> <span class="keyword">BY</span> a.IsPreferred) <span class="keyword">AS</span> Address</span><br><span class="line"><span class="keyword">FROM</span> People <span class="keyword">AS</span> p</span><br><span class="line"><span class="keyword">WHERE</span> p.LastName = <span class="string">'Stark'</span></span><br><span class="line">    <span class="keyword">AND</span> p.FirstName = <span class="string">'Ned'</span></span></span><br></pre></td></tr></table></figure>
+<p>Now here’s the <code>APPLY</code> version: <a href="http://sqlfiddle.com/#!3/42ceb/2" target="_blank" rel="external">SQL Fiddle</a>:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--Using APPLY</span></span><br><span class="line"><span class="operator"><span class="keyword">SELECT</span> p.FirstName</span><br><span class="line">    , p.LastName</span><br><span class="line">    , addr.Address</span><br><span class="line"><span class="keyword">FROM</span> People <span class="keyword">AS</span> p</span><br><span class="line">    <span class="keyword">OUTER</span> APPLY(<span class="keyword">SELECT</span> TOP <span class="number">1</span> Street + <span class="string">' '</span> + City + <span class="string">' '</span> + State <span class="keyword">AS</span> Address</span><br><span class="line">                <span class="keyword">FROM</span> Addresses <span class="keyword">AS</span> a</span><br><span class="line">                <span class="keyword">WHERE</span> a.PeopleID = p.PeopleID</span><br><span class="line">                <span class="keyword">ORDER</span> <span class="keyword">BY</span> a.IsPreferred) <span class="keyword">AS</span> addr</span><br><span class="line"><span class="keyword">WHERE</span> p.LastName = <span class="string">'Stark'</span></span><br><span class="line">    <span class="keyword">AND</span> p.FirstName = <span class="string">'Ned'</span></span></span><br></pre></td></tr></table></figure>
+<p>These two queries look very similar, so you may be wondering why one is generally more performant than the other.  Part of the difference is due to the order of statement execution.  <code>SELECT</code> is one of the last clauses that get processed, so any subqueries in the <code>SELECT</code> list will take place well after the <code>FROM</code> and <code>WHERE</code> clauses have been processed.  But the <code>APPLY</code> version moves this subquery to the <code>FROM</code> clause, meaning it is executed very early and gives the query optimizer a lot more flexibility to produce an ideal execution plan.  (For a more complete list of the order of statement execution, see <a href="http://blog.sqlauthority.com/2009/04/06/sql-server-logical-query-processing-phases-order-of-statement-execution/" target="_blank" rel="external">SQL Authority</a>).</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+  
+    <a href="/page/2/" class="alignright next">Next</a>
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:stuaroo.github.io/biskillpoints-blog">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">Reporting Services: toggling issues with multiple rows</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/31/migrating-from-octopress-to-hexo/">Migrating from Octopress to Hexo</a>
+      </li>
+    
+      <li>
+        <a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">Analysis Services: service refuses to start with XML parsing error</a>
+      </li>
+    
+      <li>
+        <a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/">Quick thoughts after taking Microsoft Exam 70-461</a>
+      </li>
+    
+      <li>
+        <a href="/2014/03/28/t-sql-tips-transition-school-to-industry/">T-SQL Tips for Transitioning from School to Industry</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Analytics/">Analytics</a><small>1</small></li>
+  
+    <li><a href="/categories/Reporting/">Reporting</a><small>1</small></li>
+  
+    <li><a href="/categories/SQL/">SQL</a><small>3</small></li>
+  
+    <li><a href="/categories/Web-Development/">Web Development</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/asp-net/">asp.net</a><small>2</small></li>
+  
+    <li><a href="/tags/c/">c#</a><small>3</small></li>
+  
+    <li><a href="/tags/certification-exams/">certification exams</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/microsoft/">microsoft</a><small>1</small></li>
+  
+    <li><a href="/tags/octopress/">octopress</a><small>4</small></li>
+  
+    <li><a href="/tags/sargable/">sargable</a><small>1</small></li>
+  
+    <li><a href="/tags/snippets/">snippets</a><small>3</small></li>
+  
+    <li><a href="/tags/ssas/">ssas</a><small>1</small></li>
+  
+    <li><a href="/tags/ssrs/">ssrs</a><small>1</small></li>
+  
+    <li><a href="/tags/static-site-generators/">static site generators</a><small>1</small></li>
+  
+    <li><a href="/tags/t-sql/">t-sql</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget twitter">
+  <h3 class="title">Latest Tweets</h3>
+  <ul id="tweets">
+  	<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/stueth"  data-widget-id=411983651094536192  data-link-color="#1863a1" data-tweet-limit="3" data-chrome="noheader nofooter transparent noscrollbar">Tweets by @stueth</a>
+  </ul>
+  
+    <a href="http://twitter.com/stueth" class="twitter-follow-button" data-show-count="false">Follow @stueth</a>
+  
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Stu Baker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'plusonetobi';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.type = 'text/javascript';
+  twitterWidgets.async = true;
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+<script type="text/javascript">
+(function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}})(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>

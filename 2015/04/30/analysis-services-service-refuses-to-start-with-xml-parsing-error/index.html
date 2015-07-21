@@ -1,0 +1,295 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Analysis Services: service refuses to start with XML parsing error | BI Skill Points</title>
+  <meta name="author" content="Stu Baker">
+  
+  <meta name="description" content="The problem
+The SQL Server Analysis Services (SSAS) service cannot be started and Event Viewer lists the following error:
+
+The service cannot be started: XML parsing failed at line 1, column 8193: Illegal qualified name character.
+
+Investigating
+After doing some searches for the above error, I came upon exactly one post detailing something similar.  That post on Teo Lachev’s blog listed an error involving an ‘Illegal xml character’ and a different column than the error here, but it was close enough to be worth investigating.  He mentioned his error was caused by a corrupt master.vmp file in C:\Program Files\Microsoft SQL Server\&amp;lt;SSAS Version&amp;gt;\OLAP\Data.  For those like me who have no idea what master.vmp does, luckily some other people on the Internet do.  From that article:
+
+“The master.vmp file is the master version map that contains the GUIDS for all of the objects and the version of each object that currently exists on the server.”">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Analysis Services: service refuses to start with XML parsing error"/>
+  <meta property="og:site_name" content="BI Skill Points"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="BI Skill Points" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">BI Skill Points</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-05-01T03:00:48.000Z"><a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">2015-04-30</a></time>
+      
+      
+  
+    <h1 class="title">Analysis Services: service refuses to start with XML parsing error</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="the-problem">The problem</h2>
+<p>The SQL Server Analysis Services (SSAS) service cannot be started and Event Viewer lists the following error:</p>
+<blockquote>
+<p>The service cannot be started: XML parsing failed at line 1, column 8193: Illegal qualified name character.</p>
+</blockquote>
+<h2 id="investigating">Investigating</h2>
+<p>After doing some searches for the above error, I came upon exactly one post detailing something similar.  That <a href="http://prologika.com/CS/blogs/blog/archive/2011/04/23/analysis-services-refusing-to-start.aspx" target="_blank" rel="external">post on Teo Lachev’s blog</a> listed an error involving an ‘Illegal xml character’ and a different column than the error here, but it was close enough to be worth investigating.  He mentioned his error was caused by a corrupt master.vmp file in <code>C:\Program Files\Microsoft SQL Server\&lt;SSAS Version&gt;\OLAP\Data</code>.  For those like me who have no idea what master.vmp does, luckily some <a href="http://blogs.msdn.com/b/sqlserverfaq/archive/2009/07/08/tampering-master-vmp-file-may-result-in-losing-all-analysis-services-databases.aspx" target="_blank" rel="external">other people on the Internet</a> do.  From that article:</p>
+<blockquote>
+<p>“The master.vmp file is the master version map that contains the GUIDS for all of the objects and the version of each object that currently exists on the server.”</p>
+</blockquote>
+<a id="more"></a>
+<p>I could see how a corrupted version of that file would make it hard for the SSAS service to start.  To double check that this was the issue, I took a cursory glance at the master.vmp file.  Even scrolling through the file quickly I was able to spot the problem.  Can you see anything that looks off here?</p>
+<p><img src="http://res.cloudinary.com/biskillpoints/image/upload/v1435363656/ssas-master-vmp-corrupt_jmcuz9.jpg" alt="The corrupt master.vmp file"></p>
+<p>Good work Windows, you stuffed some output right in the middle of an XML tag.  But at least this told me it was most likely the problem.</p>
+<p>The posts above mentioned two ways to fix this 1) copy the master.vmp file from another SSAS instance or 2) delete the master.vmp file.  Deleting master.vmp and starting the service causes master.vmp to be regenerated but will also wipe out all objects in the Data directory.  Since this error occured on a dev box, I had no problems with the objects being wiped so we simply deleted master.vmp and re-deployed the Analysis Services database.  If this is not an option you can try copying master.vmp from another SSAS instance, but keep in mind that any objects that do not have GUIDs in this copied master.vmp file will be deleted when the SSAS service starts.</p>
+<h2 id="the-solution">The solution</h2>
+<p>Delete master.vmp from <code>C:\Program Files\Microsoft SQL Server\&lt;SSAS Version&gt;\OLAP\Data</code> and start the SSAS service.  <strong>This will wipe out all objects in the Data directory</strong>, so this may not be the best course of action in a production environment.</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Analytics/">Analytics</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/ssas/">ssas</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:stuaroo.github.io/biskillpoints-blog">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">Reporting Services: toggling issues with multiple rows</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/31/migrating-from-octopress-to-hexo/">Migrating from Octopress to Hexo</a>
+      </li>
+    
+      <li>
+        <a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">Analysis Services: service refuses to start with XML parsing error</a>
+      </li>
+    
+      <li>
+        <a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/">Quick thoughts after taking Microsoft Exam 70-461</a>
+      </li>
+    
+      <li>
+        <a href="/2014/03/28/t-sql-tips-transition-school-to-industry/">T-SQL Tips for Transitioning from School to Industry</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Analytics/">Analytics</a><small>1</small></li>
+  
+    <li><a href="/categories/Reporting/">Reporting</a><small>1</small></li>
+  
+    <li><a href="/categories/SQL/">SQL</a><small>3</small></li>
+  
+    <li><a href="/categories/Web-Development/">Web Development</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/asp-net/">asp.net</a><small>2</small></li>
+  
+    <li><a href="/tags/c/">c#</a><small>3</small></li>
+  
+    <li><a href="/tags/certification-exams/">certification exams</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/microsoft/">microsoft</a><small>1</small></li>
+  
+    <li><a href="/tags/octopress/">octopress</a><small>4</small></li>
+  
+    <li><a href="/tags/sargable/">sargable</a><small>1</small></li>
+  
+    <li><a href="/tags/snippets/">snippets</a><small>3</small></li>
+  
+    <li><a href="/tags/ssas/">ssas</a><small>1</small></li>
+  
+    <li><a href="/tags/ssrs/">ssrs</a><small>1</small></li>
+  
+    <li><a href="/tags/static-site-generators/">static site generators</a><small>1</small></li>
+  
+    <li><a href="/tags/t-sql/">t-sql</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget twitter">
+  <h3 class="title">Latest Tweets</h3>
+  <ul id="tweets">
+  	<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/stueth"  data-widget-id=411983651094536192  data-link-color="#1863a1" data-tweet-limit="3" data-chrome="noheader nofooter transparent noscrollbar">Tweets by @stueth</a>
+  </ul>
+  
+    <a href="http://twitter.com/stueth" class="twitter-follow-button" data-show-count="false">Follow @stueth</a>
+  
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Stu Baker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'plusonetobi';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.type = 'text/javascript';
+  twitterWidgets.async = true;
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+<script type="text/javascript">
+(function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}})(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>

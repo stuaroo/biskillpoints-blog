@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Reporting Services: toggling issues with multiple rows | BI Skill Points</title>
+  <meta name="author" content="Stu Baker">
+  
+  <meta name="description" content="The Problem
+Using row visibility to enable toggling on more than one tablix row causes odd behavior.  Drill downs do not work as expected, and all data shows when the report is initially run
+Some Background
+A colleague of mine recently encountered this issue and it brought me back to when I was first learning SSRS and experienced similar odd behavior.  Reporting Services has a unique way of doing things sometimes, which makes it a challenging learning process to figure your way around problems. So I’ll recreate how you might run into this problem, and show the general way to fix this.
+Problem Setup
+First we’ll need a query/dataset to build our tablix on.  I’ve been messing around with the StackExchange databases ever since I found out they are downloadable, so this will be my demo database.  I’m working with one of the smaller ones, DBA Stack Exchange, in this example.  (footnote?) As an aside, for a great article on downloading SE databases and importing data to your SQL Server, see this article on brentozar.com.">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Reporting Services: toggling issues with multiple rows"/>
+  <meta property="og:site_name" content="BI Skill Points"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="BI Skill Points" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">BI Skill Points</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2015-06-27T05:16:36.000Z"><a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">2015-06-26</a></time>
+      
+      
+  
+    <h1 class="title">Reporting Services: toggling issues with multiple rows</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="the-problem">The Problem</h2>
+<p>Using row visibility to enable toggling on more than one tablix row causes odd behavior.  Drill downs do not work as expected, and all data shows when the report is initially run</p>
+<h3 id="some-background">Some Background</h3>
+<p>A colleague of mine recently encountered this issue and it brought me back to when I was first learning SSRS and experienced similar odd behavior.  Reporting Services has a <em>unique</em> way of doing things sometimes, which makes it a challenging learning process to figure your way around problems. So I’ll recreate how you might run into this problem, and show the general way to fix this.</p>
+<h2 id="problem-setup">Problem Setup</h2>
+<p>First we’ll need a query/dataset to build our tablix on.  I’ve been messing around with the <a href="https://archive.org/details/stackexchange" target="_blank" rel="external">StackExchange databases</a> ever since I found out they are downloadable, so this will be my demo database.  I’m working with one of the smaller ones, <a href="http://dba.stackexchange.com/" target="_blank" rel="external">DBA Stack Exchange</a>, in this example.  (footnote?) As an aside, for a great article on downloading SE databases and importing data to your SQL Server, see <a href="http://www.brentozar.com/archive/2014/01/how-to-query-the-stackexchange-databases/" target="_blank" rel="external">this article on brentozar.com</a>.</p>
+<a id="more"></a>
+<p>Alright, so we’ve got our data, now we need a query to build this report around.  Let’s say I want to see some basic user data including location:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator"><span class="keyword">SELECT</span> <span class="keyword">COALESCE</span>(u.Location, <span class="string">'No Location'</span>) <span class="keyword">AS</span> Location</span><br><span class="line">    , <span class="keyword">CAST</span>(u.CreationDate <span class="keyword">AS</span> <span class="built_in">DATE</span>) <span class="keyword">AS</span> CreationDate</span><br><span class="line">    , u.DisplayName</span><br><span class="line">    , u.Id</span><br><span class="line">    , u.Reputation</span><br><span class="line">    , u.UpVotes</span><br><span class="line">    , u.DownVotes</span><br><span class="line">    , u.[Views] <span class="keyword">AS</span> ProfileViews</span><br><span class="line"><span class="keyword">FROM</span> Users <span class="keyword">AS</span> u</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="keyword">CAST</span>(u.CreationDate <span class="keyword">AS</span> <span class="built_in">DATE</span>) <span class="keyword">DESC</span></span><br><span class="line">    , u.Location </span><br><span class="line">    , u.Reputation <span class="keyword">DESC</span></span></span><br></pre></td></tr></table></figure>
+<p>This will show us some basic stats for a user along with their location and the day they created their account.  Some users do not fill out the Location field, so I’m using ‘No Location’ when this field is NULL.</p>
+<p>After setting our data source and embedding our query into the report, let’s setup a basic stepped table to use with our drilldowns.  We are going to drilldown from CreationDate to Location and finally to an individual user’s details.  If you’re unsure how to do this, start with a new blank tablix and click on the dropdown on Details row group &gt; Add Group &gt; Parent Group and create the Location row group.</p>
+<p><img src="http://res.cloudinary.com/biskillpoints/image/upload/v1435365317/toggling-problems-new-parent-group_yr07kb.jpg" alt="Adding a new parent group"></p>
+<p>Then add another parent group for CreationDate.  Here’s what our report looks like:</p>
+<p><img src="http://res.cloudinary.com/biskillpoints/image/upload/v1435365317/toggling-problems-tablix-layout_qqxz6t.jpg" alt="Basic layout of the tablix"></p>
+<p>Now we’ll add our drilldown toggles, starting with the location drilldown.  Right-click the detail row and select Row Visibility.  We want these rows to initially be hidden, but be toggle-able by the Location textbox.</p>
+<p><img src="http://res.cloudinary.com/biskillpoints/image/upload/v1435365317/toggling-problems-row-visibility_vyfcid.jpg" alt="Toggling row visibility on the details row"></p>
+<p>I sorted my Location and CreationDate groups descending to see more interesting results and with our new toggle on we can drill down to see our users, excellent</p>
+<p><img src="http://res.cloudinary.com/biskillpoints/image/upload/v1435365317/toggling-problems-first-drill_t0te9w.jpg" alt="Previewing the detail row drilldown"></p>
+<p>Now we’ll add another toggle to roll everything up to the CreationDate level.  Following the same process as before: right-click on our row with Location and set our toggle to use the CreationDate textbox.</p>
+<p><img src="http://res.cloudinary.com/biskillpoints/image/upload/v1435365317/toggling-problems-row-visibility-2_n5okio.jpg" alt="Toggling row visiblity on the location row"></p>
+<p>Now when we run the report, our drilldown toggles are ignored and all our data is visible.</p>
+<p><img src="http://res.cloudinary.com/biskillpoints/image/upload/v1435365317/toggling-problems-second-drill-broken_gtyb51.jpg" alt="Previewing report and drilldowns broken"></p>
+<p>So what’s the problem?  The reason we are seeing such odd behavior is because we set up our toggling on rows and we have textboxs that span multiple rows.  Look again when we select the location row:</p>
+<p><img src="http://res.cloudinary.com/biskillpoints/image/upload/v1435365317/toggling-problems-textbox-multi-rows_g5pazw.jpg" alt="Location textbox spans multiple rows"></p>
+<p>Toggling off these multi-row textboxes can cause all sorts of strange behavior, and it’s not recommended to use these cells for a multi-level toggle.</p>
+<h2 id="the-solution">The Solution</h2>
+<p>We need to set our toggling and visibility on the Group level instead of on the Row level.  First we’ll clear out our row level toggles (on the location and details rows, right-click &gt; Row Visibility and select Show and untick Display can be toggled by this report item).  Now we can click the dropdown on Location row group &gt; Group Properties.  Clicking the Visibility tab will show the same options we saw on row visibility.  Setting our toggling options here will result in Reporting Services hiding sections of the report by group instead of row.</p>
+<p><img src="http://res.cloudinary.com/biskillpoints/image/upload/v1435365317/toggling-problems-row-group-visibility_vidnxa.jpg" alt="Toggling on row groups instead"></p>
+<p>Repeat this process with the Details row group and now your toggles should work as expected.</p>
+<p><img src="http://res.cloudinary.com/biskillpoints/image/upload/v1435365317/toggling-problems-fixed_ow4py0.jpg" alt="Previewing report with correct drilldowns"></p>
+<p>TL;DR Set visibility and toggling on Groups rather than on Rows</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Reporting/">Reporting</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/ssrs/">ssrs</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Comments</h1>
+
+  
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:stuaroo.github.io/biskillpoints-blog">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">Reporting Services: toggling issues with multiple rows</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/31/migrating-from-octopress-to-hexo/">Migrating from Octopress to Hexo</a>
+      </li>
+    
+      <li>
+        <a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">Analysis Services: service refuses to start with XML parsing error</a>
+      </li>
+    
+      <li>
+        <a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/">Quick thoughts after taking Microsoft Exam 70-461</a>
+      </li>
+    
+      <li>
+        <a href="/2014/03/28/t-sql-tips-transition-school-to-industry/">T-SQL Tips for Transitioning from School to Industry</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Analytics/">Analytics</a><small>1</small></li>
+  
+    <li><a href="/categories/Reporting/">Reporting</a><small>1</small></li>
+  
+    <li><a href="/categories/SQL/">SQL</a><small>3</small></li>
+  
+    <li><a href="/categories/Web-Development/">Web Development</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/asp-net/">asp.net</a><small>2</small></li>
+  
+    <li><a href="/tags/c/">c#</a><small>3</small></li>
+  
+    <li><a href="/tags/certification-exams/">certification exams</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/microsoft/">microsoft</a><small>1</small></li>
+  
+    <li><a href="/tags/octopress/">octopress</a><small>4</small></li>
+  
+    <li><a href="/tags/sargable/">sargable</a><small>1</small></li>
+  
+    <li><a href="/tags/snippets/">snippets</a><small>3</small></li>
+  
+    <li><a href="/tags/ssas/">ssas</a><small>1</small></li>
+  
+    <li><a href="/tags/ssrs/">ssrs</a><small>1</small></li>
+  
+    <li><a href="/tags/static-site-generators/">static site generators</a><small>1</small></li>
+  
+    <li><a href="/tags/t-sql/">t-sql</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget twitter">
+  <h3 class="title">Latest Tweets</h3>
+  <ul id="tweets">
+  	<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/stueth"  data-widget-id=411983651094536192  data-link-color="#1863a1" data-tweet-limit="3" data-chrome="noheader nofooter transparent noscrollbar">Tweets by @stueth</a>
+  </ul>
+  
+    <a href="http://twitter.com/stueth" class="twitter-follow-button" data-show-count="false">Follow @stueth</a>
+  
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Stu Baker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'plusonetobi';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.type = 'text/javascript';
+  twitterWidgets.async = true;
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+<script type="text/javascript">
+(function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}})(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>

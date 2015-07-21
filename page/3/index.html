@@ -1,0 +1,304 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Page 3 | BI Skill Points</title>
+  <meta name="author" content="Stu Baker">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="BI Skill Points"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="BI Skill Points" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">BI Skill Points</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-11-24T22:01:51.000Z"><a href="/2013/11/24/getting-into-repeater-asp-dot-net-c-sharp/">2013-11-24</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/11/24/getting-into-repeater-asp-dot-net-c-sharp/">Getting into a Repeater in ASP.NET &amp; C#</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Sometimes ASP.NET and web forms drive me crazy.  For all the time savings they offer in some areas, it is downright ridiculous how hard simple tasks can be.  Here is one way you can get to other Repeater controls from a button click inside the Repeater.</p>
+<figure class="highlight xml"><figcaption><span>Basic Repeater with delete button for each Repeater item</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">table</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="title">asp:Repeater</span> <span class="attribute">ID</span>=<span class="value">"rptPeople"</span> <span class="attribute">runat</span>=<span class="value">"server"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">ItemTemplate</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="title">tr</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">asp:Label</span> <span class="attribute">ID</span>=<span class="value">"lblPersonId"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> </span><br><span class="line">          <span class="attribute">Text</span>=<span class="value">'&lt;%# Eval("PersonId") %&gt;'</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">asp:TextBox</span> <span class="attribute">ID</span>=<span class="value">"txtLastName"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> </span><br><span class="line">          <span class="attribute">Text</span>=<span class="value">'&lt;%# Eval("LastName") %&gt;'</span>&gt;</span><span class="tag">&lt;/<span class="title">asp:TextBox</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">asp:TextBox</span> <span class="attribute">ID</span>=<span class="value">"txtFirstName"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> </span><br><span class="line">          <span class="attribute">Text</span>=<span class="value">'&lt;%# Eval("FirstName") %&gt;'</span>&gt;</span><span class="tag">&lt;/<span class="title">asp:TextBox</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="title">td</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="title">asp:Button</span> <span class="attribute">ID</span>=<span class="value">"btnDeletePerson"</span> <span class="attribute">runat</span>=<span class="value">"server"</span> <span class="attribute">Text</span>=<span class="value">"Delete"</span> </span><br><span class="line">          <span class="attribute">OnClientClick</span>=<span class="value">"return confirm('Are you sure you want to delete?');"</span> </span><br><span class="line">          <span class="attribute">OnClick</span>=<span class="value">"btnDeletePerson_Click"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="title">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="title">tr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">ItemTemplate</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="title">asp:Repeater</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Now on a Delete button click, we want to remove the row (Repeater item, technically) and update our database.  So our OnClick event needs to retrieve our Label text so we can use that ID for updates.</p>
+<p>The easiest way to do this is to use what sent you there (i.e. your button) to get to the parent Repeater item and from there find the specific Label that holds our PersonId.<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup></p>
+<figure class="highlight csharp"><figcaption><span>OnClick event for Delete button</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">btnDeletePerson_Click</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    Button btnDeletePerson = (Button)sender;</span><br><span class="line">    RepeaterItem item = (RepeaterItem)btnDeletePerson.NamingContainer;</span><br><span class="line">    Label lblPersonId = (Label)item.FindControl(<span class="string">"lblPersonId"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>There’s also a shorthand way to do this with more casting; I like the first example as it’s easy to tell what you’re doing at each step, but once you’ve got the concept down the single line of this second example is very convenient.<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup></p>
+<figure class="highlight csharp"><figcaption><span>FindControl shorthand</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Label lblPersonId = (Label)((Control)sender).Parent.FindControl(<span class="string">"lblPersonId"</span>);</span><br></pre></td></tr></table></figure>
+<p>And once we’ve got our hands on that PersonId, we can delete to our heart’s content!</p>
+<p>Sources:</p>
+<hr class="footnotes-sep">
+<section class="footnotes">
+<ol class="footnotes-list">
+<li id="fn1" class="footnote-item"><p><a href="http://stackoverflow.com/a/10880370/1657324" target="_blank" rel="external">stackoverflow: Find Control in asp:repeater on button click event</a> <a href="#fnref1" class="footnote-backref">↩</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p><a href="http://www.codeproject.com/Articles/247289/In-place-editing-with-ASP-NET-Repeater" target="_blank" rel="external">codeproject: In-place Editing with ASP.NET Repeater</a> <a href="#fnref2" class="footnote-backref">↩</a></p>
+</li>
+</ol>
+</section>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2013-11-21T05:48:35.000Z"><a href="/2013/11/20/getting-started-octopress-windows-no-ruby/">2013-11-20</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2013/11/20/getting-started-octopress-windows-no-ruby/">Getting started with Octopress: on Windows and with no Ruby experience?!</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>So you just found <a href="http://octopress.org/" target="_blank" rel="external">Octopress</a> where you can write in <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">Markdown</a> and get awesome free hosting for your static html via <a href="http://pages.github.com/" target="_blank" rel="external">Github pages</a>. But it’s built with Ruby and you are on Windows, can you still make this work?</p>
+<p>Yes, with a little patience you definitely can! I am just getting my blog up on Octopress and thought I’d help by documenting a couple of the <em>gotchas</em> you may run into.</p>
+<p>Head over to the <a href="http://octopress.org/docs/setup/" target="_blank" rel="external">Octopress setup page</a> to give you an outline of what you need to do.</p>
+<p>As the setup page mentions, first you’ll need to install Git if you don’t already have it. I recommend the <a href="http://msysgit.github.io/" target="_blank" rel="external">msysgit</a> as it comes with a  very convenient Git Bash console. If you’re unsure which installation settings to select, see the <a href="https://help.github.com/articles/set-up-git" target="_blank" rel="external">setup page on github</a> and click the “Not sure what to pick on each screen?” info box. Then head over to the <a href="https://help.github.com/articles/generating-ssh-keys" target="_blank" rel="external">generating SSH keys</a> page to make sure you can connect to Github.</p>
+<p>Back to the Octopress setup guide, the next step is to install Ruby 1.9.3 or greater. Since we’ve got Windows awesomeness going on, you will want to get the <a href="http://rubyinstaller.org/downloads/" target="_blank" rel="external">RubyInstaller for Windows</a>. After installation you will now have the Start Command Prompt with Ruby which you can run Ruby commands on.</p>
+<p>Next clone the Octopress project so you have a local copy and change to that directory using your Start Command Prompt with Ruby. Here is about the point where I ran into some problems.  The setup guide has you install dependencies, so you run:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gem install bundler</span><br><span class="line">bundle install</span><br></pre></td></tr></table></figure>
+<p>But if you are lucky like me when running <code>bundle install</code> you get an error about native extensions and that you need the Development Kit.  Head on over to the <a href="https://github.com/oneclick/rubyinstaller/wiki/Development-Kit" target="_blank" rel="external">RubyInstaller Dev Kit page</a> and follow their instructions for downloading and installing the Dev Kit. After that’s done, change directories back to Octopress and run those two Ruby commands again, which should both complete this time.</p>
+<p>Following the guide, you are now ready to run the next bit <code>rake install</code> and, of course, that doesn’t work either.  If you’re like me and <a href="http://stackoverflow.com/q/12400185/1657324" target="_blank" rel="external">this guy at stackoverflow</a>, you got a:</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rake aborted!</span><br><span class="line">No such file or directory - git remote -v</span><br></pre></td></tr></table></figure>
+<p>which <a href="http://stackoverflow.com/a/12401196/1657324" target="_blank" rel="external">the question answerer points out</a> is a PATH problem. Following his link will lead to a <a href="http://stackoverflow.com/a/9793850" target="_blank" rel="external">short and sweet description on updating your PATH</a>.  The basic problem here is that Ruby can’t find git, and you will be updating your PATH so it can find it in the future. After the update, run that <code>rake install</code> again and it works! Hooray!</p>
+<p>Now jump on over to <a href="http://octopress.org/docs/deploying/github/" target="_blank" rel="external">deploying to Github pages</a> and follow the instructions to get your Octopress pages pushed up to a Pages site.  Those instructions are perfect and caused me no problems so I won’t bother going into them.</p>
+<p>One last gotcha: you will generally use the two commands listed on that page <code>rake generate</code> and <code>rake deploy</code> to generate your markdown to html and push them up to Github, but one other command you’ll definitely want to use is <code>rake preview</code> which will mount a webserver for you to view your site before pushing it live.  <a href="http://octopress.org/docs/blogging/" target="_blank" rel="external">The Octopress docs</a> say your webserver is mounted at http://localhost:4000, which it is, but if it’s late and your brain’s not working right like mine and <a href="http://stackoverflow.com/q/17465404" target="_blank" rel="external">this stackoverflow user’s</a>, you may try that path exactly and wonder why nothing is showing up.  If you deployed to a Github Project Page, the generated files you are trying to see are in /public/ProjectName, so you will need to add your project’s name to the URL to see the preview (a la http://localhost:4000/ProjectName).</p>
+<p>Hope some of that helps my Windows friends out there; happy blogging!</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/page/2/" class="alignleft prev">Prev</a>
+  
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Search">
+    <input type="hidden" name="q" value="site:stuaroo.github.io/biskillpoints-blog">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Recent Posts</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2015/06/26/reporting-services-toggling-issues-with-multiple-rows/">Reporting Services: toggling issues with multiple rows</a>
+      </li>
+    
+      <li>
+        <a href="/2015/05/31/migrating-from-octopress-to-hexo/">Migrating from Octopress to Hexo</a>
+      </li>
+    
+      <li>
+        <a href="/2015/04/30/analysis-services-service-refuses-to-start-with-xml-parsing-error/">Analysis Services: service refuses to start with XML parsing error</a>
+      </li>
+    
+      <li>
+        <a href="/2014/05/01/quick-thoughts-after-taking-microsoft-exam-70-461/">Quick thoughts after taking Microsoft Exam 70-461</a>
+      </li>
+    
+      <li>
+        <a href="/2014/03/28/t-sql-tips-transition-school-to-industry/">T-SQL Tips for Transitioning from School to Industry</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Categories</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Analytics/">Analytics</a><small>1</small></li>
+  
+    <li><a href="/categories/Reporting/">Reporting</a><small>1</small></li>
+  
+    <li><a href="/categories/SQL/">SQL</a><small>3</small></li>
+  
+    <li><a href="/categories/Web-Development/">Web Development</a><small>7</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/asp-net/">asp.net</a><small>2</small></li>
+  
+    <li><a href="/tags/c/">c#</a><small>3</small></li>
+  
+    <li><a href="/tags/certification-exams/">certification exams</a><small>1</small></li>
+  
+    <li><a href="/tags/hexo/">hexo</a><small>1</small></li>
+  
+    <li><a href="/tags/microsoft/">microsoft</a><small>1</small></li>
+  
+    <li><a href="/tags/octopress/">octopress</a><small>4</small></li>
+  
+    <li><a href="/tags/sargable/">sargable</a><small>1</small></li>
+  
+    <li><a href="/tags/snippets/">snippets</a><small>3</small></li>
+  
+    <li><a href="/tags/ssas/">ssas</a><small>1</small></li>
+  
+    <li><a href="/tags/ssrs/">ssrs</a><small>1</small></li>
+  
+    <li><a href="/tags/static-site-generators/">static site generators</a><small>1</small></li>
+  
+    <li><a href="/tags/t-sql/">t-sql</a><small>3</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget twitter">
+  <h3 class="title">Latest Tweets</h3>
+  <ul id="tweets">
+  	<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/stueth"  data-widget-id=411983651094536192  data-link-color="#1863a1" data-tweet-limit="3" data-chrome="noheader nofooter transparent noscrollbar">Tweets by @stueth</a>
+  </ul>
+  
+    <a href="http://twitter.com/stueth" class="twitter-follow-button" data-show-count="false">Follow @stueth</a>
+  
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2015 Stu Baker
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'plusonetobi';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+<script type="text/javascript">
+(function(){
+  var twitterWidgets = document.createElement('script');
+  twitterWidgets.type = 'text/javascript';
+  twitterWidgets.async = true;
+  twitterWidgets.src = '//platform.twitter.com/widgets.js';
+  document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+})();
+</script>
+
+
+
+<script type="text/javascript">
+(function(d,s,id){
+  var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}})(document,"script","twitter-wjs");
+</script>
+
+</body>
+</html>
