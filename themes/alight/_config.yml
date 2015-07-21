@@ -4,15 +4,20 @@ menu:
 
 widgets:
 - search
+- recent_posts
 - category
 - tag
+- twitter
 
 excerpt_link: Read More
 
 twitter:
-  username:
+  username: stueth
   show_replies: false
-  tweet_count: 5
+  tweet_count: 3
+  widget_id: 411983651094536192
+  follow_button: true
+  show_follower_count: false
 
 addthis:
   enable: true
@@ -27,7 +32,7 @@ fancybox: true
 google_analytics:
 rss:
 
-comment_provider: facebook
+comment_provider: disqus
 # Facebook comment
 facebook:
   appid: 123456789012345

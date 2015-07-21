@@ -1,0 +1,11 @@
+<% if (config.twitter_username){ %>
+<div class="widget twitter">
+  <h3 class="title">Latest Tweets</h3>
+  <ul id="tweets">
+  	<a class="twitter-timeline" data-dnt="true" href="https://twitter.com/<%= config.twitter_username %>"  data-widget-id=<%= config.twitter_widget_id %>  data-link-color="#1863a1" data-tweet-limit="<%= config.twitter_tweet_count %>" data-chrome="noheader nofooter transparent noscrollbar">Tweets by @<%= config.twitter_username %></a>
+  </ul>
+  <% if (config.twitter_follow_button){ %>
+    <a href="http://twitter.com/<%= config.twitter_username %>" class="twitter-follow-button" data-show-count="<%= config.twitter_show_follower_count %>">Follow @<%= config.twitter_username %></a>
+  <% } %>
+</div>
+<% } %>
