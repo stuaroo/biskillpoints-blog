@@ -22,6 +22,8 @@ new_post_name: :year-:month-:day-:title.md
 
 This will give your new files the same file name format as the Octopress default.
 
+<!-- more -->
+
 ## Basic Commands
 
 All commands are very similar to Octopress except you'll use the keyword `hexo` instead of `rake`.  Some examples:
@@ -40,9 +42,11 @@ If, like me, you are a big fan of the little things like footnotes, strikethroug
 
 ## Roll Your Own Widgets
 
-One thing that's nice about messing with asides in Octopress is it aides in transitioning to editing widgets in Hexo.  Some themes, like the modified Light theme I'm currently using, come with pre-made sidebar widgets ready to go.  I was not familiar with the .ejs templating in Hexo, but compare a few 
+One thing that's nice about messing with asides in Octopress is it aides in transitioning to editing widgets in Hexo.  Some themes, like the modified Light theme I'm currently using, come with pre-made sidebar widgets ready to go.  I was not familiar with the .ejs templating in Hexo, but after looking through a few you can easily get a feel for their flow.
 
-I've been messing around with a Twitter widget that runs off a timeline, similar to the hack-y functionality on my Octopress site.  Using [this proposed pull request to Octopress to fix Twitter plugins](https://github.com/imathis/octopress/pull/1311/files) I made some edits to .ejs files to construct a Twitter timeline widget.  Here's some gists below if you'd like to give it a try:
+I've been messing around with a Twitter widget that runs off a timeline, similar to the hack-y functionality on my Octopress site.  Using [this proposed pull request to Octopress to fix Twitter plugins](https://github.com/imathis/octopress/pull/1311/files) I made some edits to .ejs files to construct it.  If you'd like to try this yourself:
+
+* Enable twitter under widgets, and set variables for your twitter account/timeline in your themes `_config.yml`:
 
 ```raw themes/light/_config.yml
 widgets:
@@ -59,6 +63,8 @@ twitter:
   follow_button: true
   show_follower_count: false
 ```
+
+* Add the following to the bottom of your themes layout/_partial/after_footer.ejs file:
 
 ```raw themes/light/layout/_partial/after_footer.ejs
 <% if (config.twitter_follow_button){ %>
@@ -81,6 +87,8 @@ twitter:
 <% } %>
 ```
 
+* Create this twitter.ejs file in your theme's _widget folder:
+
 ```raw themes/light/layout/_widget/twitter.ejs
 <% if (config.twitter_username){ %>
 <div class="widget twitter">
@@ -98,3 +106,5 @@ twitter:
 </div>
 <% } %>
 ```
+
+* Then add any styling changes in you theme's source/css/_partial/sidebar.styl

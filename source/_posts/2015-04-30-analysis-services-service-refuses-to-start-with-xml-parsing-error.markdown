@@ -18,6 +18,8 @@ After doing some searches for the above error, I came upon exactly one post deta
 
 >"The master.vmp file is the master version map that contains the GUIDS for all of the objects and the version of each object that currently exists on the server."
 
+<!-- more -->
+
 I could see how a corrupted version of that file would make it hard for the SSAS service to start.  To double check that this was the issue, I took a cursory glance at the master.vmp file.  Even scrolling through the file quickly I was able to spot the problem.  Can you see anything that looks off here?
 
 ![The corrupt master.vmp file][1]

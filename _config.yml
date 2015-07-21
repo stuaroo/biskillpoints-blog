@@ -12,7 +12,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://stuaroo.github.io/biskillpoints-blog/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -66,8 +66,10 @@ theme: alight
 
 # Deployment
 ## Docs: http://hexo.io/docs/deployment.html
-deploy:
-  type:
+deploy: 
+  type: git
+  repo: https://github.com/stuaroo/biskillpoints-blog.git
+  branch: gh-pages
 
 
 # Disqus

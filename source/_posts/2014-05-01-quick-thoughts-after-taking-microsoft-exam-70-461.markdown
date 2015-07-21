@@ -18,6 +18,8 @@ tags:
 
 - [Microsoft's outline](https://www.microsoft.com/learning/en-us/exam-70-461.aspx#skills) really does a good job of laying out what to expect.  The areas I really struggled with were a lot of things I use infrequently or have never used: Triggers, transaction isolation levels, XML output.  I've pasted in the MS study outline and **bolded** parts that I think would have helped a bunch had I been more familiar with them.
 
+<!-- more -->
+
 ## Create database objects (24%)
 * Create and alter tables using T-SQL syntax (simple statements)
     * Create tables without using the built in tools; ALTER; DROP; ALTER COLUMN; CREATE
