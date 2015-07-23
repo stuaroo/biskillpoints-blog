@@ -22,6 +22,8 @@ I did this trying to solve a different problem; it didn't help then but I liked 
 
 I really liked the idea of using footnotes for my sources, but by default they are rather gigantic and widely spaced.  Some simple additions to `sass/custom/_styles.css` and your footnotes look like they are supposed to: compact and well-spaced.  I'll even add an example footnote[^1] for you to see what these changes look like.
 
+<!-- more -->
+
 ## [Filter repositories from Github sidebar](http://blog.codebykat.com/2013/05/20/three-octopress-tweaks/#github-aside) 
 
 As the author of that linked post so aptly points out, it doesn't make a lot of sense to show off the repository your blog is on if you are being hosted by Github Pages.  Also, some projects you just don't want to show off, and a few lines of code will make sure they don't appear under the Github Repos of your blog.

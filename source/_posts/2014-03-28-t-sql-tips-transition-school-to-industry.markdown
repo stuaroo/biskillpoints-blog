@@ -32,6 +32,8 @@ FROM People AS p
 
 However, when working with an `OUTER JOIN`, conditions in the `WHERE` clause and conditions on the `OUTER JOIN` can result in very different results:
 
+<!-- more -->
+
 ```sql
 --Conditions in the WHERE clause
 SELECT *
