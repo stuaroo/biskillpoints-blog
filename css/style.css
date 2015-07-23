@@ -617,7 +617,7 @@ article footer .addthis iframe {
 #sidebar .tag small:after {
   content: ')';
 }
-#sidebar .twitter {
+#sidebar .twitter #tweets {
   padding-left: 10px;
   padding-right: 10px;
 }
