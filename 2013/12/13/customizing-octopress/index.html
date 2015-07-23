@@ -6,7 +6,13 @@
   <title>Customizing Octopress | BI Skill Points</title>
   <meta name="author" content="Stu Baker">
   
-  <meta name="description" content="I recently made a few customizations to my Octopress environment using resources/blog articles scattered about the web; all were surprisingly easy and">
+  <meta name="description" content="I recently made a few customizations to my Octopress environment using resources/blog articles scattered about the web; all were surprisingly easy and definitely added value.  Here are my favorites if you want to take a stab at any of these yourself:
+Hiding specific categories of posts from the front page
+I particularly wanted to do this for my Snippets category, as sometimes I want to take notes or describe the logic of a concept (or simply have a basic example that I can copy in the future), but I don’t particularly want that showing up as the top article on my front page either.  Best of both worlds by following the simple changes in this article.
+Change the preview server to Ruby Thin Server
+I did this trying to solve a different problem; it didn’t help then but I liked the server so much that I’ve stuck with it. Very easy to get it up and running too.
+Footnote styling
+I really liked the idea of using footnotes for my sources, but by default they are rather gigantic and widely spaced.  Some simple additions to sass/custom/_styles.css and your footnotes look like they are supposed to: compact and well-spaced.  I’ll even add an example footnote[1] for you to see what these changes look like.">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -67,6 +73,7 @@
 <p>I did this trying to solve a different problem; it didn’t help then but I liked the server so much that I’ve stuck with it. Very easy to get it up and running too.</p>
 <h2 id="footnote-styling"><a href="http://hiltmon.com/blog/2013/05/08/octopress-now-has-footnotes/" target="_blank" rel="external">Footnote styling</a></h2>
 <p>I really liked the idea of using footnotes for my sources, but by default they are rather gigantic and widely spaced.  Some simple additions to <code>sass/custom/_styles.css</code> and your footnotes look like they are supposed to: compact and well-spaced.  I’ll even add an example footnote<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> for you to see what these changes look like.</p>
+<a id="more"></a>
 <h2 id="filter-repositories-from-github-sidebar"><a href="http://blog.codebykat.com/2013/05/20/three-octopress-tweaks/#github-aside" target="_blank" rel="external">Filter repositories from Github sidebar</a></h2>
 <p>As the author of that linked post so aptly points out, it doesn’t make a lot of sense to show off the repository your blog is on if you are being hosted by Github Pages.  Also, some projects you just don’t want to show off, and a few lines of code will make sure they don’t appear under the Github Repos of your blog.</p>
 <h2 id="use-monokai-color-scheme-for-code-block-syntax-highlighting"><a href="https://github.com/ragle/Monokai-Sublime-Text-Octopress" target="_blank" rel="external">Use Monokai color scheme for code block syntax highlighting</a></h2>
