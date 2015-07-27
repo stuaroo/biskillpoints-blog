@@ -29,7 +29,7 @@ addthis:
 
 fancybox: true
 
-google_analytics:
+google_analytics: UA-65641092-1
 rss:
 
 comment_provider: disqus
